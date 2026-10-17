@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Mocha Topia Nav</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #F2D1B6;
+      color: #7F5C46;
+      overflow: hidden;
+    }
+
+    /* ---------------- SIDEBAR ---------------- */
+    .sidebar {
+      width: 260px;
+      height: 100vh;
+      background: #F2D1B6;
+      border-right: 2px solid rgba(127, 92, 70, 0.15);
+      position: relative;
+      transition: transform 0.35s ease;
+      z-index: 999;
+    }
+
+    /* SLIDE OUT (SIDE HIDE) */
+    .sidebar.hidden {
+      transform: translateX(-260px);
+    }
+
+    /* CONTENT INSIDE SIDEBAR (scrollable) */
+    .sidebar-content {
+      height: 100%;
+      overflow-y: auto;
+      padding: 20px 10px;
+    }
+
+    /* SCROLL BAR */
+    .sidebar-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar-content::-webkit-scrollbar-thumb {
+      background: rgba(127, 92, 70, 0.4);
+      border-radius: 4px;
+    }
+
+    /* --------------- HAMBURGER BUTTON ---------------- */
+    .toggle-btn {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      background: #7F5C46;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 20px;
+      z-index: 2000;
+    }
+
+    /* ---------------- LOGO ---------------- */
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .logo img {
+      width: 150px;
+    }
+
+    .slogan {
+      font-size: 12px;
+      font-style: italic;
+      text-align: center;
+      opacity: 1;
+      margin-bottom: 20px;
+    }
+
+    /* ---------------- PROFILE ---------------- */
+    .profile-name {
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+
+    /* ---------------- CART BUTTON ---------------- */
+    .cart-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #7F5C46;
+      color: white;
+      font-weight: 600;
+      margin: 12px 0;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .cart-button:hover {
+      background: #5e3e2e;
+      transform: translateX(5px);
+    }
+
+    .cart-icon-nav {
+      font-size: 20px;
+    }
+
+    .cart-badge-nav {
+      background: red;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 50%;
+      font-size: 11px;
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* ---------------- NAV LINKS ---------------- */
+    nav a {
+      display: block;
+      text-decoration: none;
+      color: #7F5C46;
+      font-weight: 600;
+      margin: 12px 0;
+      padding: 10px 12px;
+      border-radius: 6px;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover {
+      background: rgba(127, 92, 70, 0.1);
+      transform: translateX(5px);
+    }
+
+    .active-link {
+      background: rgba(127, 92, 70, 0.18);
+      border-left: 4px solid #7F5C46;
+      color: #5e3e2e;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HAMBURGER BUTTON -->
+  <div id="toggleBtn" class="toggle-btn">☰</div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+
+    <div class="sidebar-content">
+
+      <div class="logo">
+        <img src="images/logo.png" alt="Mocha Topia Logo">
+      </div>
+
+      <div class="slogan">"Bad mood? Reboot with coffee."</div>
+
+      <div class="profile-name" id="profileName"></div>
+
+      <nav>
+        <a href="home.html" target="main" onclick="return navigateInFrame(this, 'home.html')">Home</a>
+        <a href="about.html" target="main" onclick="return navigateInFrame(this, 'about.html')">About</a>
+        <a href="menu.html" target="main" onclick="return navigateInFrame(this, 'menu.html')">Menu</a>
+        <a href="gallery.html" target="main" onclick="return navigateInFrame(this, 'gallery.html')">Gallery</a>
+        <a href="contact.html" target="main" onclick="return navigateInFrame(this, 'contact.html')">Contact</a>
+        <a href="logout.html" target="_top">Logout</a>
+      </nav>
+    </div>
+
+  </div>
+
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const toggleBtn = document.getElementById("toggleBtn");
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("hidden");
+    });
+
+    /* Load Username */
+    let user = localStorage.getItem("username");
+    if (user) {
+      document.getElementById("profileName").innerText = user;
+    }
+
+    /* Navigate within frame */
+    function navigateInFrame(element, page) {
+      // Set active styling
+      const navLinks = document.querySelectorAll("nav a");
+      navLinks.forEach(l => l.classList.remove("active-link"));
+      element.classList.add("active-link");
+
+      // Navigate in parent's main frame
+      if (window.parent && window.parent.frames && window.parent.frames['main']) {
+        window.parent.frames['main'].location.href = page;
+        return false; // Prevent default link behavior
+      }
+      return true; // Allow default if not in frameset
+    }
+  </script>
+
+</body>
+
+</html>

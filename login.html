@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body class="dark-form-wrapper">
+
+    <form class="dark-form" id="loginForm">
+        <h2>Welcome Back</h2>
+
+        <label>Username</label>
+        <input type="text" id="logUser" required>
+
+
+        <label>Password</label>
+        <input type="password" id="logPass" required>
+
+        <button class="dark-btn" type="submit">Login</button>
+
+        <p style="margin-top:12px; text-align:center;">
+            <a href="forgot.html" target="main">Forgot Password?</a>
+        </p>
+        <p style="text-align:center; margin-top:10px;">
+            <a href="register.html" target="main">Create an Account</a>
+        </p>
+    </form>
+
+    <script>
+        $("#loginForm").on("submit", function (e) {
+            e.preventDefault();
+
+            let inputUser = $("#logUser").val().trim();
+            let inputPass = $("#logPass").val().trim();
+
+            let savedUser = localStorage.getItem("username");
+            let savedPass = localStorage.getItem("password");
+
+            console.log("Saved:", savedUser, savedPass);
+            console.log("Entered:", inputUser, inputPass);
+
+            if (inputUser === savedUser && inputPass === savedPass) {
+                localStorage.setItem("loggedIn", "true");
+                alert("Login successful!");
+                window.location = "frameset.html";;
+            } else {
+                alert("Incorrect username or password!");
+            }
+        });
+    </script>
+
+
+
+
+
+</body>
+
+</html>

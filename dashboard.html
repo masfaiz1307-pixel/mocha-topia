@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Mocha Topia</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body class="dark-form-wrapper">
+
+    <div class="dark-form" style="text-align:center;">
+        <h2>Welcome Back!</h2>
+        <p id="welcomeUser">Loading...</p>
+
+        <button class="dark-btn" onclick="location.href='home.html'">Enter Website</button>
+        <button class="dark-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Load username into dashboard
+        let user = localStorage.getItem("username");
+        document.getElementById("welcomeUser").innerText =
+            "Hello, " + (user ? user : "Guest") + "!";
+
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            alert("Logged out.");
+            window.location = "welcome.html";
+        }
+    </script>
+
+</body>
+
+</html>

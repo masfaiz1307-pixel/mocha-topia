@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Mocha Topia</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="checkout-box">
+
+        <h2>Complete Your Order</h2>
+
+        <label>Your Name</label>
+        <input type="text" id="custName" required>
+
+        <label>Pickup Method</label>
+        <select id="method">
+            <option>Dine In</option>
+            <option>Takeaway</option>
+        </select>
+
+        <h3>Order Summary</h3>
+        <div id="summary"></div>
+
+        <button class="dark-btn" onclick="finishOrder()">
+            Place Order
+        </button>
+
+    </div>
+
+    <script>
+        function loadSummary() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let sum = document.getElementById("summary");
+            let total = 0;
+
+            sum.innerHTML = "";
+
+            cart.forEach(item => {
+                sum.innerHTML += `
+            <p>${item.name} x ${item.qty} — Rp ${(item.price * item.qty).toLocaleString()}</p>
+        `;
+                total += item.price * item.qty;
+            });
+
+            sum.innerHTML += `<hr><p><strong>Total: Rp ${total.toLocaleString()}</strong></p>`;
+        }
+
+        function finishOrder() {
+            alert("Order placed! Thank you!");
+            localStorage.removeItem("cart");
+            window.location = "home.html";
+        }
+
+        loadSummary();
+    </script>
+
+</body>
+
+</html>

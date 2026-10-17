@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Message Sent - Mocha Topia</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .success-container {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .success-title {
+            font-size: 32px;
+            color: #7F5C46;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            font-size: 18px;
+            color: #a67856;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .dark-btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            background: #7F5C46;
+            color: #FFE2BD;
+            cursor: pointer;
+            transition: 0.25s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .dark-btn:hover {
+            background: #a07355;
+            box-shadow: 0 0 12px rgba(127, 92, 70, 0.4);
+        }
+    </style>
+</head>
+
+<body class="page">
+    <main class="container">
+        <div class="success-container">
+            <div class="success-icon">✉️</div>
+            <h1 class="success-title">Message Sent Successfully!</h1>
+            <p class="success-message">
+                Thank you for contacting Mocha Topia! <br>
+                We have received your message and will get back to you as soon as possible.
+                <br><br>
+                You will also receive a confirmation email shortly.
+            </p>
+            <div class="btn-container">
+                <button class="dark-btn" onclick="goToHome()">Back to Home</button>
+                <button class="dark-btn" onclick="goToMenu()">View Menu</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function goToHome() {
+            if (window.parent && window.parent !== window && window.parent.frames['main']) {
+                window.parent.frames['main'].location.href = "home.html";
+            } else {
+                window.location.href = "home.html";
+            }
+        }
+
+        function goToMenu() {
+            if (window.parent && window.parent !== window && window.parent.frames['main']) {
+                window.parent.frames['main'].location.href = "menu.html";
+            } else {
+                window.location.href = "menu.html";
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Mocha Topia – Home</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .home-container {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .home-title {
+      font-size: 42px;
+      color: #7F5C46;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .home-tagline {
+      font-size: 18px;
+      color: #a67856;
+      margin-bottom: 35px;
+      font-style: italic;
+    }
+
+    .home-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .dark-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      background: #7F5C46;
+      color: #FFE2BD;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .dark-btn:hover {
+      background: #a07355;
+      box-shadow: 0 0 12px rgba(127, 92, 70, 0.4);
+    }
+
+    .welcome-box {
+      font-size: 18px;
+      color: #5c4332;
+      font-weight: 500;
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="home-container">
+
+    <!-- Greeting -->
+    <div class="welcome-box">
+      Welcome back, <span id="userName"></span>! ☕
+    </div>
+
+    <h1 class="home-title">Welcome to Mocha Topia</h1>
+    <p class="home-tagline">Bad mood? Reboot with coffee.</p>
+
+    <div id="guestButtons" class="home-buttons" style="display:none;">
+      <button class="dark-btn" onclick="navigateTo('login.html')">Login</button>
+      <button class="dark-btn" onclick="navigateTo('register.html')">Register</button>
+    </div>
+
+    <div id="userButtons" class="home-buttons" style="display:none;">
+      <button class="dark-btn" onclick="navigateTo('menu.html')">Explore Menu</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Function to navigate within frameset or standalone
+    function navigateTo(page) {
+      if (window.parent && window.parent !== window && window.parent.frames['main']) {
+        // We're in a frameset, target the main frame
+        window.parent.frames['main'].location.href = page;
+      } else {
+        // Standalone mode
+        window.location.href = page;
+      }
+    }
+
+    // Load username
+    let username = localStorage.getItem("username");
+    if (username) {
+      document.getElementById("userName").innerText = username;
+    }
+
+    // Check login status and show appropriate buttons
+    if (localStorage.getItem("loggedIn") === "true") {
+      // logged-in user
+      document.getElementById("userButtons").style.display = "flex";
+      document.getElementById("guestButtons").style.display = "none";
+    } else {
+      // guest user
+      document.getElementById("guestButtons").style.display = "flex";
+      document.getElementById("userButtons").style.display = "none";
+    }
+  </script>
+
+</body>
+
+</html>

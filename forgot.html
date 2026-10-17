@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body class="dark-form-wrapper">
+
+    <form class="dark-form" id="forgotForm">
+        <h2>Reset Password</h2>
+
+        <label>Email Address</label>
+        <input type="email" id="fpEmail" required>
+
+        <button class="dark-btn" type="submit">Send Reset Link</button>
+
+        <p style="text-align:center; margin-top:10px;">
+            <a href="login.html" target="main">Back to Login</a>
+        </p>
+    </form>
+
+    <script>
+        $("#forgotForm").on("submit", function (e) {
+            e.preventDefault();
+            alert("Reset link sent! (demo)");
+        });
+    </script>
+
+</body>
+
+</html>

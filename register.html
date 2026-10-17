@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Mocha Topia</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .password-rules {
+            background: rgba(255, 226, 189, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 13px;
+            color: #FFE2BD;
+        }
+
+        .password-rules ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .password-rules li {
+            margin: 4px 0;
+        }
+
+        .rule-valid {
+            color: #4ade80;
+        }
+
+        .rule-invalid {
+            color: #f87171;
+        }
+
+        .error-message {
+            color: #f87171;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #4ade80;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="dark-form-wrapper">
+    <form class="dark-form" id="regForm">
+        <h2>Create Account</h2>
+
+        <label>Username *</label>
+        <input type="text" id="regUser" required minlength="3">
+        <div class="error-message" id="userError">Username must be at least 3 characters</div>
+
+        <label>Email *</label>
+        <input type="email" id="regEmail" required>
+        <div class="error-message" id="emailError">Please enter a valid email address</div>
+
+        <label>Password *</label>
+        <input type="password" id="regPass1" required>
+
+        <div class="password-rules">
+            <strong>Password must contain:</strong>
+            <ul>
+                <li id="rule-length">At least 8 characters</li>
+                <li id="rule-upper">At least one uppercase letter</li>
+                <li id="rule-lower">At least one lowercase letter</li>
+                <li id="rule-number">At least one number</li>
+            </ul>
+        </div>
+
+        <label>Confirm Password *</label>
+        <input type="password" id="regPass2" required>
+        <div class="error-message" id="passError">Passwords do not match</div>
+        <div class="success-message" id="passSuccess">✓ Passwords match</div>
+
+        <button class="dark-btn" type="submit">Register</button>
+
+        <p style="text-align:center; margin-top:10px;">
+            <a href="login.html" target="main">Already have an account?</a>
+        </p>
+    </form>
+
+    <script>
+        // Password validation rules
+        function validatePassword(password) {
+            const rules = {
+                length: password.length >= 8,
+                upper: /[A-Z]/.test(password),
+                lower: /[a-z]/.test(password),
+                number: /[0-9]/.test(password)
+            };
+            return rules;
+        }
+
+        // Update password rules display
+        $("#regPass1").on("input", function () {
+            const password = $(this).val();
+            const rules = validatePassword(password);
+
+            $("#rule-length").toggleClass("rule-valid", rules.length).toggleClass("rule-invalid", !rules.length);
+            $("#rule-upper").toggleClass("rule-valid", rules.upper).toggleClass("rule-invalid", !rules.upper);
+            $("#rule-lower").toggleClass("rule-valid", rules.lower).toggleClass("rule-invalid", !rules.lower);
+            $("#rule-number").toggleClass("rule-valid", rules.number).toggleClass("rule-invalid", !rules.number);
+        });
+
+        // Check if passwords match
+        $("#regPass2").on("input", function () {
+            const pass1 = $("#regPass1").val();
+            const pass2 = $(this).val();
+
+            if (pass2.length > 0) {
+                if (pass1 === pass2) {
+                    $("#passError").hide();
+                    $("#passSuccess").show();
+                } else {
+                    $("#passError").show();
+                    $("#passSuccess").hide();
+                }
+            } else {
+                $("#passError").hide();
+                $("#passSuccess").hide();
+            }
+        });
+
+        // Validate email format
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        // Form submission
+        $("#regForm").on("submit", function (e) {
+            e.preventDefault();
+
+            // Get values
+            const user = $("#regUser").val().trim();
+            const email = $("#regEmail").val().trim();
+            const pass1 = $("#regPass1").val();
+            const pass2 = $("#regPass2").val();
+
+            // Reset error messages
+            $(".error-message").hide();
+
+            let hasError = false;
+
+            // Validate username
+            if (user.length < 3) {
+                $("#userError").show();
+                hasError = true;
+            }
+
+            // Validate email
+            if (!isValidEmail(email)) {
+                $("#emailError").show();
+                hasError = true;
+            }
+
+            // Validate password rules
+            const rules = validatePassword(pass1);
+            if (!rules.length || !rules.upper || !rules.lower || !rules.number) {
+                alert("Password does not meet the requirements. Please check the rules above.");
+                hasError = true;
+            }
+
+            // Check if passwords match
+            if (pass1 !== pass2) {
+                $("#passError").show();
+                alert("Passwords do not match!");
+                hasError = true;
+            }
+
+            // If no errors, save account
+            if (!hasError) {
+                // Save account
+                localStorage.setItem("username", user);
+                localStorage.setItem("email", email);
+                localStorage.setItem("password", pass1);
+
+                alert("Account created successfully! ✓");
+
+                // Navigate to login page within frameset
+                if (window.parent && window.parent !== window && window.parent.frames['main']) {
+                    window.parent.frames['main'].location.href = "login.html";
+                } else {
+                    window.location.href = "login.html";
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
