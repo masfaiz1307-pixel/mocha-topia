@@ -177,8 +177,8 @@ As required by Step 11 of the assignment, the repository was handed over to a me
 
 | Handover Record | Response |
 |---|---|
-| **Verifier Name** | `[Enter Name of Peer Reviewer from Other Group]` |
-| **Verifier Group Number** | `[Enter Reviewer's Group Number]` |
+| **Verifier Name** | `Fayyaz` |
+| **Verifier Group Number** | `Group 7` |
 | **Device / Operating System** | Windows 11 / Docker Desktop v28.x |
 | **Fresh Clone Completed?** | **Yes** (`git clone ... -b chore/dockerize-project`) |
 | **Image Build Successful?** | **Yes** (`docker compose up --build -d` built in 14s) |
