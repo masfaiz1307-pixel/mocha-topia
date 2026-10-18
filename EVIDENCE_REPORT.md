@@ -1,7 +1,7 @@
 # 📄 Dockerization & Verification Evidence Report
 **Course / Assignment:** Week 6 — Containerization with Docker  
 **Project Name:** Mocha Topia (Coffee Shop Web Application)  
-**Author:** Faiz (masfaiz1307@gmail.com)  
+**Author:** Faiz, Immanuel, Dwisasono  
 **Date:** October 18, 2026  
 **Git Branch:** `chore/dockerize-project`  
 **Repository:** `mocha-topia`  
