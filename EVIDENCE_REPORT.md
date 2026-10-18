@@ -10,10 +10,10 @@
 
 | Item | Details |
 |---|---|
-| **Group Number** | Group 04 *(adjust if different)* |
+| **Group Number** | Group 04 |
 | **Project Title** | Mocha Topia (Coffee Shop Web Application) |
-| **Group Members & Student IDs** | 1. Faiz (Student ID: `[Enter Student ID]`)<br>2. Immanuel (Student ID: `[Enter Student ID]`)<br>3. Dwisasono (Student ID: `[Enter Student ID]`) |
-| **Repository URL** | `https://github.com/[YOUR_USERNAME]/mocha-topia` |
+| **Group Members & Student IDs** | 1. Faiz (Student ID: `012202500030`)<br>2. Immanuel (Student ID: `012202500017`)<br>3. Dwisasono (Student ID: `0122025000`) |
+| **Repository URL** | `https://github.com/masfaiz1307-pixel/mocha-topia` |
 | **Git Working Branch** | `chore/dockerize-project` (merged to `master`) |
 | **Demonstration Video URL** | `[Paste YouTube / Google Drive Video Link Here]` |
 
@@ -227,9 +227,9 @@ In a team DevOps pipeline, mixing standalone `docker run` commands with `docker 
 
 | Member / Student ID | Specific Contribution | Commit / PR Evidence | Concept the Member Can Explain |
 |---|---|---|---|
-| **Faiz**<br>`[Student ID]` | Implemented `Dockerfile`, `nginx.conf` Gzip & cache directives, resolved port conflict, conducted functional browser verification. | Commits: `91dd342`, `1fcd381`<br>PR: `#1 chore/dockerize-project` | Explains Alpine Linux base image selection, multi-stage vs single-stage builds, and Nginx foreground process (`daemon off;`). |
-| **Immanuel**<br>`[Student ID]` | Implemented `compose.yaml` service architecture, container networking, and `.dockerignore` security exclusions. | Commits: `91dd342`, `f37f0d7`<br>PR: `#1 chore/dockerize-project` | Explains Docker port mapping (`8080:80`), detached mode (`-d`), and security implications of excluding `.env` and `.git`. |
-| **Dwisasono**<br>`[Student ID]` | Coordinated handover peer testing, compiled verification test matrix (V-01 to V-06), and finalized README documentation. | Commits: `f37f0d7`, `1fcd381`<br>PR: `#1 Review & Merge` | Explains reproducibility criteria, container lifecycle commands (`inspect`, `logs`, `down`), and troubleshooting diagnostics. |
+| **Faiz**<br>`012202500030` | Implemented `Dockerfile`, `nginx.conf` Gzip & cache directives, resolved port conflict, conducted functional browser verification. | Commits: `91dd342`, `1fcd381`<br>PR: `#1 chore/dockerize-project` | Explains Alpine Linux base image selection, multi-stage vs single-stage builds, and Nginx foreground process (`daemon off;`). |
+| **Immanuel**<br>`012202500017` | Implemented `compose.yaml` service architecture, container networking, and `.dockerignore` security exclusions. | Commits: `91dd342`, `f37f0d7`<br>PR: `#1 chore/dockerize-project` | Explains Docker port mapping (`8080:80`), detached mode (`-d`), and security implications of excluding `.env` and `.git`. |
+| **Dwisasono**<br>`0122025000` | Coordinated handover peer testing, compiled verification test matrix (V-01 to V-06), and finalized README documentation. | Commits: `f37f0d7`, `1fcd381`<br>PR: `#1 Review & Merge` | Explains reproducibility criteria, container lifecycle commands (`inspect`, `logs`, `down`), and troubleshooting diagnostics. |
 
 ---
 
