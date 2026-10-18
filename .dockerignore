@@ -1,0 +1,39 @@
+# ============================================================
+# .dockerignore — Exclude files that should NOT be in the image
+# ============================================================
+
+# Version control
+.git
+.gitignore
+
+# IDE and editor files
+.vscode
+*.swp
+*.swo
+*~
+
+# Docker files (not needed inside the image)
+Dockerfile
+docker-compose.yml
+compose.yaml
+.dockerignore
+
+# Environment and secret files
+.env
+.env.*
+!.env.example
+
+# Documentation and assignment files
+*.md
+*.pdf
+*.docx
+LICENSE
+
+# OS-generated files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Node/build artifacts (just in case)
+node_modules
+npm-debug.log

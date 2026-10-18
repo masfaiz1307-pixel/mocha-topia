@@ -1,0 +1,12 @@
+# ============================================================
+# Docker Compose for Mocha Topia
+# Single-service static website served via Nginx
+# ============================================================
+
+services:
+  app:
+    build: .
+    container_name: mocha-topia-app
+    ports:
+      - "8080:80"
+    restart: unless-stopped
