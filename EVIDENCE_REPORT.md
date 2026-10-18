@@ -15,7 +15,7 @@
 | **Group Members & Student IDs** | 1. Faiz (Student ID: `012202500030`)<br>2. Immanuel (Student ID: `012202500017`)<br>3. Dwisasono (Student ID: `012202500064`) |
 | **Repository URL** | `https://github.com/masfaiz1307-pixel/mocha-topia` |
 | **Git Working Branch** | `chore/dockerize-project` (merged to `master`) |
-| **Demonstration Video URL** | `https://drive.google.com/file/d/1ZdxJHYtCUHku-lXLZVDMLvEDMrqy9FiD/view?usp=drivesdk` |
+| **Demonstration Video URL** | `https://drive.google.com/file/d/15GMW1KzOlkNakVKkog_W5PYNIK5CJhup/view?usp=drivesdk` |
 
 ---
 
@@ -25,7 +25,7 @@ Before Dockerization, the application was run and tested locally to establish a 
 
 | Baseline Item | Group Response |
 |---|---|
-| **Project Name & Repo** | Mocha Topia (`https://github.com/[YOUR_USERNAME]/mocha-topia`) |
+| **Project Name & Repo** | Mocha Topia (`https://github.com/masfaiz1307-pixel/mocha-topia`) |
 | **Main User or Purpose** | Coffee shop customers browsing beverages, ordering food/drinks, and contacting staff |
 | **Technology Stack** | HTML5, CSS3, JavaScript (ES6), jQuery 3.6.0 (CDN) |
 | **Normal Start Command** | Open `index.html` directly in browser (static client application) |
