@@ -15,7 +15,7 @@
 | **Group Members & Student IDs** | 1. Faiz (Student ID: `012202500030`)<br>2. Immanuel (Student ID: `012202500017`)<br>3. Dwisasono (Student ID: `0122025000`) |
 | **Repository URL** | `https://github.com/masfaiz1307-pixel/mocha-topia` |
 | **Git Working Branch** | `chore/dockerize-project` (merged to `master`) |
-| **Demonstration Video URL** | `[Paste YouTube / Google Drive Video Link Here]` |
+| **Demonstration Video URL** | `https://drive.google.com/file/d/1ZdxJHYtCUHku-lXLZVDMLvEDMrqy9FiD/view?usp=drivesdk` |
 
 ---
 
