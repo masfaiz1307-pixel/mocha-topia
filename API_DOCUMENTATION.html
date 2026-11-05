@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mocha Topia — API Documentation (Swagger UI)</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #F9F7F5;
+    }
+    .top-header {
+      background: linear-gradient(135deg, #5E3E2E, #7F5C46);
+      color: white;
+      padding: 22px 35px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .top-header h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .top-header .badge-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .nav-bar {
+      background: #E8D3C3;
+      padding: 10px 35px;
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #5E3E2E;
+      border-bottom: 1px solid #D6BCAB;
+    }
+    .nav-bar a {
+      color: #5E3E2E;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .nav-bar a:hover {
+      text-decoration: underline;
+    }
+    #swagger-ui {
+      max-width: 1300px;
+      margin: 20px auto 50px auto;
+      padding: 0 20px;
+    }
+    .swagger-ui .topbar {
+      display: none;
+    }
+    .swagger-ui .info {
+      margin: 25px 0;
+    }
+    .swagger-ui .info .title {
+      font-family: 'Poppins', sans-serif;
+      color: #5E3E2E;
+    }
+    .swagger-ui .btn.execute {
+      background-color: #7F5C46 !important;
+      border-color: #5E3E2E !important;
+      color: #fff !important;
+    }
+    .swagger-ui .opblock.opblock-post {
+      border-color: #49cc90;
+      background: rgba(73,204,144,.05);
+    }
+    .swagger-ui .opblock.opblock-get {
+      border-color: #61affe;
+      background: rgba(97,175,254,.05);
+    }
+    .swagger-ui .opblock.opblock-delete {
+      border-color: #f93e3e;
+      background: rgba(249,62,62,.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="top-header">
+    <div>
+      <h1>☕ Mocha Topia — Interactive API Documentation</h1>
+      <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">
+        Course: Information Systems Agile Project Management with DevOps (ISAPMD) — Week 7 | Group 04
+      </p>
+    </div>
+    <div class="badge-group">
+      <span class="badge">OpenAPI 3.0.3</span>
+      <span class="badge">Swagger UI v5.11</span>
+      <span class="badge">Group 04: Faiz, Immanuel, Dwisasono</span>
+      <span class="badge">Status: Production Ready</span>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <span>📂 Deliverables Quick Links:</span>
+    <a href="W7_Group04_Testing_Scenarios.xlsx" download>📊 Download Excel Test Scenarios (.xlsx)</a>
+    <a href="W7_Group04_Testing_Scenarios.csv" download>📋 Download CSV (Google Sheets)</a>
+    <a href="openapi.yaml" download>📄 OpenAPI Spec (YAML)</a>
+    <a href="openapi.json" download>📦 OpenAPI Spec (JSON)</a>
+    <a href="MochaTopia_API_Postman_Collection.json" download>📮 Postman Collection (.json)</a>
+    <a href="TEST_SCENARIOS.html">🔍 Test Scenario Dashboard</a>
+  </div>
+
+  <div id="swagger-ui"></div>
+
+  <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.onload = function() {
+      const spec = {"openapi": "3.0.3", "info": {"title": "☕ Mocha Topia Coffee Shop API", "description": "Comprehensive RESTful API Specification for the Mocha Topia Coffee Shop Web Application.\nDesigned for Information Systems Agile Project Management with DevOps (ISAPMD) — Week 7:\nQuality Assurance, Test Scenarios, and API Validation.\n\n**Group 04:**\n- Faiz (Student ID: `012202500030`)\n- Immanuel (Student ID: `012202500017`)\n- Dwisasono (Student ID: `012202500064`)\n", "version": "1.0.0", "contact": {"name": "Mocha Topia Engineering Group 04", "email": "masfaiz1307@gmail.com", "url": "https://github.com/masfaiz1307-pixel/mocha-topia"}, "license": {"name": "MIT", "url": "https://opensource.org/licenses/MIT"}}, "servers": [{"url": "http://localhost:8080", "description": "Local Docker Nginx Container Environment"}, {"url": "https://formsubmit.co", "description": "External FormSubmit AJAX Integration Gateway"}], "tags": [{"name": "Authentication & Profile", "description": "Customer registration, login credentials verification, JWT issuance, and profile retrieval"}, {"name": "Menu & Catalog", "description": "Coffee & food catalog browsing, category filtering, and item search"}, {"name": "Shopping Cart", "description": "Active cart management, item quantity updates, pricing computations, and cart clearing"}, {"name": "Orders & Checkout", "description": "Order submission, delivery details, payment method selection, and order receipts"}, {"name": "Contact & Feedback", "description": "Customer inquiries, contact form submission, and FormSubmit AJAX dispatch"}, {"name": "Health & System", "description": "Nginx container status and health endpoints"}], "paths": {"/api/v1/auth/register": {"post": {"tags": ["Authentication & Profile"], "summary": "Register a new customer account", "description": "Validates username, email address syntax, and password complexity (>=8 chars, uppercase, lowercase, numeric).", "operationId": "registerUser", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/RegisterRequest"}}}}, "responses": {"201": {"description": "Account created successfully", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AuthSuccessResponse"}}}}, "400": {"description": "Invalid input / Validation failure (password too weak, invalid email format, short username)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}, "409": {"description": "Username or email already registered", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}}}}, "/api/v1/auth/login": {"post": {"tags": ["Authentication & Profile"], "summary": "Authenticate user credentials", "description": "Verifies username and password. On successful authentication, returns an access token and user session details.", "operationId": "loginUser", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/LoginRequest"}}}}, "responses": {"200": {"description": "Login successful", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/LoginSuccessResponse"}}}}, "400": {"description": "Missing username or password", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}, "401": {"description": "Incorrect username or password", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}}}}, "/api/v1/auth/me": {"get": {"tags": ["Authentication & Profile"], "summary": "Retrieve current authenticated customer profile", "description": "Returns user profile for the supplied Bearer token.", "operationId": "getCurrentUser", "security": [{"BearerAuth": []}], "responses": {"200": {"description": "User profile retrieved", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserProfileResponse"}}}}, "401": {"description": "Unauthorized / Missing or expired Bearer token", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}}}}, "/api/v1/auth/forgot-password": {"post": {"tags": ["Authentication & Profile"], "summary": "Request password reset link", "description": "Dispatches password reset instructions to registered email.", "operationId": "forgotPassword", "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["email"], "properties": {"email": {"type": "string", "format": "email", "example": "faiz@mochatopia.com"}}}}}}, "responses": {"200": {"description": "Reset instructions sent", "content": {"application/json": {"schema": {"type": "object", "properties": {"message": {"type": "string", "example": "Password reset link sent to your email."}}}}}}, "400": {"description": "Invalid email syntax"}}}}, "/api/v1/auth/logout": {"post": {"tags": ["Authentication & Profile"], "summary": "Logout user session", "description": "Invalidates active session / token.", "operationId": "logoutUser", "security": [{"BearerAuth": []}], "responses": {"200": {"description": "Session terminated successfully"}}}}, "/api/v1/menu": {"get": {"tags": ["Menu & Catalog"], "summary": "Browse menu catalog with optional search & filter", "description": "Returns all available coffee beverages and food items. Supports filtering by category (`drink` or `food`) and keyword search.", "operationId": "getMenu", "parameters": [{"name": "category", "in": "query", "required": false, "description": "Filter items by category (`drink` or `food`)", "schema": {"type": "string", "enum": ["all", "drink", "food"], "default": "all"}}, {"name": "search", "in": "query", "required": false, "description": "Case-insensitive search keyword", "schema": {"type": "string", "example": "americano"}}], "responses": {"200": {"description": "List of matching menu items", "content": {"application/json": {"schema": {"type": "array", "items": {"$ref": "#/components/schemas/MenuItem"}}}}}}}}, "/api/v1/menu/{id}": {"get": {"tags": ["Menu & Catalog"], "summary": "Get details of a single menu item", "description": "Returns item details including price, image URL, category, and availability.", "operationId": "getMenuItemById", "parameters": [{"name": "id", "in": "path", "required": true, "description": "Unique ID of the menu item", "schema": {"type": "integer", "example": 1}}], "responses": {"200": {"description": "Menu item found", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/MenuItem"}}}}, "404": {"description": "Menu item not found", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}}}}, "/api/v1/cart": {"get": {"tags": ["Shopping Cart"], "summary": "Get user active shopping cart", "description": "Returns current items, quantities, subtotal calculations, and total amount.", "operationId": "getCart", "responses": {"200": {"description": "Active cart details", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CartResponse"}}}}}}, "delete": {"tags": ["Shopping Cart"], "summary": "Clear entire shopping cart", "description": "Removes all items from the active shopping cart and resets total to 0.", "operationId": "clearCart", "responses": {"200": {"description": "Cart cleared successfully", "content": {"application/json": {"schema": {"type": "object", "properties": {"message": {"type": "string", "example": "Cart cleared successfully"}, "total": {"type": "integer", "example": 0}}}}}}}}}, "/api/v1/cart/items": {"post": {"tags": ["Shopping Cart"], "summary": "Add an item to shopping cart", "description": "Adds a menu item with specified quantity (minimum 1) to cart.", "operationId": "addToCart", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AddToCartRequest"}}}}, "responses": {"200": {"description": "Item added or merged into cart", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CartResponse"}}}}, "400": {"description": "Invalid quantity (must be >= 1) or missing item ID", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}}}}, "/api/v1/cart/items/{id}": {"put": {"tags": ["Shopping Cart"], "summary": "Update quantity of a cart item", "description": "Increments or decrements quantity of an existing line item. Clamped at minimum 1.", "operationId": "updateCartItem", "parameters": [{"name": "id", "in": "path", "required": true, "description": "Item index or item ID in cart", "schema": {"type": "integer"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"type": "object", "required": ["qty"], "properties": {"qty": {"type": "integer", "minimum": 1, "example": 3}}}}}}, "responses": {"200": {"description": "Cart item quantity updated", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CartResponse"}}}}, "400": {"description": "Quantity must be an integer >= 1"}}}, "delete": {"tags": ["Shopping Cart"], "summary": "Remove a single item from cart", "description": "Splices out the specified item from the cart array and recalculates total.", "operationId": "removeCartItem", "parameters": [{"name": "id", "in": "path", "required": true, "description": "Item index or ID to remove", "schema": {"type": "integer"}}], "responses": {"200": {"description": "Item removed successfully", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CartResponse"}}}}}}}, "/api/v1/orders": {"post": {"tags": ["Orders & Checkout"], "summary": "Place a new coffee shop order (Checkout)", "description": "Processes checkout order with customer delivery details and selected payment method.\nValidates that required fields (Name, Phone, Address, Payment) are provided.\nSpecifically addresses BUG-1042: rejects submission with 400 Bad Request if payment method is missing.\n", "operationId": "createOrder", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/OrderCreateRequest"}}}}, "responses": {"201": {"description": "Order created successfully", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/OrderReceipt"}}}}, "400": {"description": "Missing required checkout field (e.g. empty payment method) or empty cart", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}}}}, "/api/v1/orders/{orderId}": {"get": {"tags": ["Orders & Checkout"], "summary": "Retrieve order receipt and status", "description": "Fetches order summary, purchased items, timestamp, and fulfillment status.", "operationId": "getOrderById", "security": [{"BearerAuth": []}], "parameters": [{"name": "orderId", "in": "path", "required": true, "description": "Unique order identifier", "schema": {"type": "string", "example": "ORD-2026-1022"}}], "responses": {"200": {"description": "Order details found", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/OrderReceipt"}}}}, "403": {"description": "Forbidden - Requester does not own this order (Slide 71 authorization check)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}, "404": {"description": "Order ID does not exist", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}}}}, "/ajax/{recipientEmail}": {"post": {"tags": ["Contact & Feedback"], "summary": "FormSubmit third-party AJAX notification endpoint", "description": "External endpoint used in `contact.html` to deliver customer inquiries to café management email.\nSends email notification, auto-responder, and structured table payload.\n", "operationId": "submitContactFormSubmit", "parameters": [{"name": "recipientEmail", "in": "path", "required": true, "description": "Target email address for receiving message", "schema": {"type": "string", "example": "masfaiz1307@gmail.com"}}], "requestBody": {"required": true, "content": {"application/x-www-form-urlencoded": {"schema": {"$ref": "#/components/schemas/ContactFormSubmitPayload"}}, "application/json": {"schema": {"$ref": "#/components/schemas/ContactFormSubmitPayload"}}}}, "responses": {"200": {"description": "Message received and queued for dispatch", "content": {"application/json": {"schema": {"type": "object", "properties": {"success": {"type": "string", "example": "true"}, "message": {"type": "string", "example": "Form submitted successfully!"}}}}}}, "400": {"description": "Validation error or missing required fields"}}}}, "/api/v1/contact": {"post": {"tags": ["Contact & Feedback"], "summary": "Internal contact submission fallback endpoint", "description": "Local fallback endpoint for processing contact inquiries.", "operationId": "submitContactInternal", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ContactInternalRequest"}}}}, "responses": {"201": {"description": "Feedback recorded", "content": {"application/json": {"schema": {"type": "object", "properties": {"status": {"type": "string", "example": "success"}, "ticketId": {"type": "string", "example": "TKT-8941"}}}}}}}}}, "/healthz": {"get": {"tags": ["Health & System"], "summary": "Web server and Docker container healthcheck", "description": "Verifies Nginx Alpine container is actively listening and responsive.", "operationId": "healthCheck", "responses": {"200": {"description": "Service healthy", "content": {"text/plain": {"schema": {"type": "string", "example": "OK"}}}}}}}}, "components": {"securitySchemes": {"BearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT", "description": "Enter JWT Bearer token obtained from `/api/v1/auth/login`"}}, "schemas": {"RegisterRequest": {"type": "object", "required": ["username", "email", "password"], "properties": {"username": {"type": "string", "minLength": 3, "example": "faiz_dev"}, "email": {"type": "string", "format": "email", "example": "faiz@mochatopia.com"}, "password": {"type": "string", "minLength": 8, "description": "Must contain at least 1 uppercase, 1 lowercase, 1 number", "example": "CoffeePass123"}}}, "LoginRequest": {"type": "object", "required": ["username", "password"], "properties": {"username": {"type": "string", "example": "faiz_dev"}, "password": {"type": "string", "example": "CoffeePass123"}}}, "AuthSuccessResponse": {"type": "object", "properties": {"status": {"type": "string", "example": "success"}, "message": {"type": "string", "example": "Account created successfully! ✓"}, "user": {"type": "object", "properties": {"id": {"type": "integer", "example": 101}, "username": {"type": "string", "example": "faiz_dev"}, "email": {"type": "string", "example": "faiz@mochatopia.com"}}}}}, "LoginSuccessResponse": {"type": "object", "properties": {"status": {"type": "string", "example": "success"}, "token": {"type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwMX0..."}, "expiresIn": {"type": "integer", "example": 3600}, "user": {"type": "object", "properties": {"username": {"type": "string", "example": "faiz_dev"}, "email": {"type": "string", "example": "faiz@mochatopia.com"}}}}}, "UserProfileResponse": {"type": "object", "properties": {"id": {"type": "integer", "example": 101}, "username": {"type": "string", "example": "faiz_dev"}, "email": {"type": "string", "example": "faiz@mochatopia.com"}, "createdAt": {"type": "string", "format": "date-time", "example": "2026-10-22T08:30:00Z"}}}, "MenuItem": {"type": "object", "properties": {"id": {"type": "integer", "example": 1}, "name": {"type": "string", "example": "Americano"}, "price": {"type": "integer", "description": "Price in Indonesian Rupiah (IDR)", "example": 20000}, "img": {"type": "string", "example": "images/Americano.jpeg"}, "cat": {"type": "string", "enum": ["drink", "food"], "example": "drink"}}}, "AddToCartRequest": {"type": "object", "required": ["name", "price", "qty"], "properties": {"name": {"type": "string", "example": "Americano"}, "price": {"type": "integer", "example": 20000}, "qty": {"type": "integer", "minimum": 1, "example": 2}, "img": {"type": "string", "example": "images/Americano.jpeg"}}}, "CartItem": {"type": "object", "properties": {"name": {"type": "string", "example": "Americano"}, "price": {"type": "integer", "example": 20000}, "qty": {"type": "integer", "example": 2}, "img": {"type": "string", "example": "images/Americano.jpeg"}, "subtotal": {"type": "integer", "example": 40000}}}, "CartResponse": {"type": "object", "properties": {"items": {"type": "array", "items": {"$ref": "#/components/schemas/CartItem"}}, "totalCount": {"type": "integer", "example": 2}, "totalPrice": {"type": "integer", "example": 40000}, "formattedTotal": {"type": "string", "example": "Total: Rp 40.000"}}}, "OrderCreateRequest": {"type": "object", "required": ["name", "phone", "address", "payment", "items"], "properties": {"name": {"type": "string", "minLength": 2, "example": "Faiz Daffa"}, "phone": {"type": "string", "minLength": 8, "example": "081234567890"}, "address": {"type": "string", "example": "Jl. Sudirman No. 45, Jakarta Pusat"}, "payment": {"type": "string", "enum": ["Cash", "QRIS", "Bank Transfer"], "description": "Required payment method. Leaving empty triggers 400 error (BUG-1042)", "example": "Cash"}, "items": {"type": "array", "minItems": 1, "items": {"$ref": "#/components/schemas/CartItem"}}}}, "OrderReceipt": {"type": "object", "properties": {"orderId": {"type": "string", "example": "ORD-2026-1022"}, "name": {"type": "string", "example": "Faiz Daffa"}, "phone": {"type": "string", "example": "081234567890"}, "address": {"type": "string", "example": "Jl. Sudirman No. 45, Jakarta Pusat"}, "payment": {"type": "string", "example": "Cash"}, "cart": {"type": "array", "items": {"$ref": "#/components/schemas/CartItem"}}, "total": {"type": "integer", "example": 40000}, "time": {"type": "string", "example": "10/22/2026, 9:30:15 AM"}, "status": {"type": "string", "example": "Confirmed"}}}, "ContactFormSubmitPayload": {"type": "object", "required": ["name", "email", "visit_type", "message"], "properties": {"name": {"type": "string", "minLength": 2, "example": "Faiz Daffa"}, "email": {"type": "string", "format": "email", "example": "masfaiz1307@gmail.com"}, "phone": {"type": "string", "example": "081234567890"}, "topic": {"type": "string", "enum": ["Feedback", "Collaboration", "Question", "Order Inquiry", "Other"], "example": "Feedback"}, "visit_type": {"type": "string", "enum": ["Dine In", "Takeaway"], "example": "Dine In"}, "newsletter": {"type": "string", "enum": [true, false], "example": true}, "message": {"type": "string", "minLength": 10, "example": "The dark roast Americano and Cheese Toast were fantastic!"}, "_subject": {"type": "string", "example": "New Contact Form Submission - Mocha Topia"}, "_captcha": {"type": "string", "example": "false"}, "_template": {"type": "string", "example": "table"}, "_autoresponse": {"type": "string", "example": "Thank you for contacting Mocha Topia! We have received your message."}}}, "ContactInternalRequest": {"type": "object", "required": ["name", "email", "message"], "properties": {"name": {"type": "string", "example": "Faiz Daffa"}, "email": {"type": "string", "example": "faiz@mochatopia.com"}, "topic": {"type": "string", "example": "Collaboration"}, "message": {"type": "string", "example": "We would like to host a coffee brewing workshop at your venue."}}}, "ErrorResponse": {"type": "object", "properties": {"status": {"type": "string", "example": "error"}, "error": {"type": "string", "example": "Invalid input / validation failure"}, "details": {"type": "string", "example": "Field 'payment' is required and cannot be empty."}}}}}};
+
+      window.ui = SwaggerUIBundle({
+        spec: spec,
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "BaseLayout",
+        defaultModelsExpandDepth: 2,
+        defaultModelExpandDepth: 2,
+        docExpansion: 'list',
+        filter: true,
+        showExtensions: true,
+        showCommonExtensions: true,
+        tryItOutEnabled: true
+      });
+    };
+  </script>
+</body>
+</html>

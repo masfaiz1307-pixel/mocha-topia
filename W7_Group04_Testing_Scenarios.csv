@@ -1,0 +1,558 @@
+﻿Test Case ID,Module,Test Scenario,Testing Type / Method,Created By,Preconditions,Test Steps,Test Data,Expected Result,Actual Result,Status,Executed By,Bug ID / Evidence Ref
+MT-REG-001,User Registration,Successful registration with all valid inputs,"Functional, Positive, Black-Box",Faiz (012202500030),Browser is open on register.html; localStorage is clear,"1. Open register.html in browser
+2. Enter Username 'faiz_dev'
+3. Enter Email 'faiz@mochatopia.com'
+4. Enter Password 'CoffeePass123'
+5. Enter Confirm Password 'CoffeePass123'
+6. Click 'Register' button","Username: faiz_dev, Email: faiz@mochatopia.com, Pass: CoffeePass123","Alert 'Account created successfully! ✓' displays, credentials stored in localStorage, redirected to login.html",Account created successfully and redirected to login.html,Pass,Faiz,V-03
+MT-REG-002,User Registration,Registration with minimum valid username length (exact 3 characters),"Boundary Value Analysis, Positive, Functional",Faiz (012202500030),On register.html,"1. Enter Username 'bob'
+2. Enter Email 'bob@test.com'
+3. Enter Password 'SecurePass99'
+4. Confirm Password 'SecurePass99'
+5. Click 'Register'","Username: bob (length=3), Email: bob@test.com, Pass: SecurePass99",Registration succeeds as 3 chars satisfies minimum length check (user.length >= 3),Validation passed and account registered,Pass,Faiz,
+MT-REG-003,User Registration,Registration fails when username is less than 3 characters (boundary 2 characters),"Boundary Value Analysis, Negative, Functional",Faiz (012202500030),On register.html,"1. Enter Username 'al'
+2. Enter Email 'al@test.com'
+3. Enter Password 'SecurePass99'
+4. Confirm Password 'SecurePass99'
+5. Click 'Register'","Username: al (length=2), Email: al@test.com, Pass: SecurePass99","Validation fails, #userError element is shown, form submission is blocked","Username error message displayed, account not created",Pass,Faiz,
+MT-REG-004,User Registration,Registration fails when username is empty,"Equivalence Partitioning, Negative",Faiz (012202500030),On register.html,"1. Leave Username field empty
+2. Enter valid Email and matching strong passwords
+3. Click 'Register'","Username: '', Email: user@test.com, Pass: Coffee1234",HTML5 required validation or JS length check prevents submission with warning prompt,Form blocked submission with required field prompt,Pass,Faiz,
+MT-REG-005,User Registration,Registration handles username with only whitespace characters,"Negative, Robustness Testing",Faiz (012202500030),On register.html,"1. Enter 4 whitespace spaces in Username
+2. Enter valid email and password
+3. Click 'Register'","Username: '    ' (4 spaces), Email: test@test.com, Pass: Coffee1234","Trimmed username becomes empty (length 0), #userError displays, submission blocked",#userError displayed as trim() resulted in length 0,Pass,Faiz,
+MT-REG-006,User Registration,Registration with long alphanumeric username (50 characters),"Boundary Value Analysis, Positive",Faiz (012202500030),On register.html,"1. Enter a 50-character alphanumeric username
+2. Enter valid email and password
+3. Click 'Register'","Username: 'user_' + 45 'a's, Email: user50@test.com, Pass: Pass12345",Registration succeeds without text truncation or layout overflow,"Registered successfully, stored properly in localStorage",Pass,Faiz,
+MT-REG-007,User Registration,Registration with standard valid email address format,"Positive, Functional",Faiz (012202500030),On register.html,"1. Enter valid username
+2. Enter Email 'barista.expert@mocha-topia.co.id'
+3. Enter valid matching passwords
+4. Click 'Register'",Email: barista.expert@mocha-topia.co.id,"Regex passes, account saved successfully",Email accepted and saved,Pass,Faiz,
+MT-REG-008,User Registration,Registration fails with email missing '@' symbol,"Negative, Equivalence Partitioning",Faiz (012202500030),On register.html,"1. Enter Username 'testuser'
+2. Enter Email 'usermochatopia.com'
+3. Enter valid passwords
+4. Click 'Register'",Email: usermochatopia.com,"HTML5 email validation and JS regex fail, #emailError displayed, submission blocked",Submission blocked with invalid email warning,Pass,Faiz,
+MT-REG-009,User Registration,Registration fails with email missing top-level domain extension,"Negative, Equivalence Partitioning",Faiz (012202500030),On register.html,"1. Enter Username 'testuser'
+2. Enter Email 'user@mochatopia'
+3. Enter valid passwords
+4. Click 'Register'",Email: user@mochatopia,"Email regex test returns false, #emailError displayed","#emailError shown, form blocked",Pass,Faiz,
+MT-REG-010,User Registration,Registration fails with email containing consecutive '@' signs,"Negative, Security / Robustness",Faiz (012202500030),On register.html,"1. Enter Email 'john@@domain.com'
+2. Click Register",Email: john@@domain.com,Regex validation rejects malformed email address,Email format rejected,Pass,Faiz,
+MT-REG-011,User Registration,Registration fails with email containing spaces in middle,"Negative, Data Integrity",Faiz (012202500030),On register.html,"1. Enter Email 'john doe@domain.com'
+2. Click Register",Email: john doe@domain.com,Regex /^[^\s@]+@[^\s@]+\.[^\s@]+$/ returns false; rejected,Rejected by regex validation,Pass,Faiz,
+MT-REG-012,User Registration,Registration with exact 8-character password meeting all 4 complexity rules,"Boundary Value Analysis, Positive",Faiz (012202500030),On register.html,"1. Enter Password 'Aa123456' (length 8, 1 upper, 1 lower, 1 number)
+2. Re-enter same password in Confirm
+3. Click Register",Pass: Aa123456,"All 4 rule indicators (#rule-length, #rule-upper, #rule-lower, #rule-number) turn green; submission allowed","All 4 rules green, submission succeeded",Pass,Faiz,
+MT-REG-013,User Registration,Registration fails with 7-character password (just below minimum length),"Boundary Value Analysis, Negative",Faiz (012202500030),On register.html,"1. Enter Password 'Abc1234' (length 7)
+2. Confirm 'Abc1234'
+3. Click Register",Pass: Abc1234 (7 chars),"#rule-length stays red, alert prompt 'Password does not meet the requirements' appears on submit","Alert displayed, registration blocked",Pass,Faiz,
+MT-REG-014,User Registration,Registration fails when password lacks uppercase character,"Negative, Rule Verification",Faiz (012202500030),On register.html,"1. Enter Password 'mochatopia123' (all lowercase + digits)
+2. Check rule indicators
+3. Click Register",Pass: mochatopia123,#rule-upper indicator remains invalid; alert blocks submission,Rule upper is red; alert prevented registration,Pass,Faiz,
+MT-REG-015,User Registration,Registration fails when password lacks lowercase character,"Negative, Rule Verification",Faiz (012202500030),On register.html,"1. Enter Password 'MOCHATOPIA123' (all uppercase + digits)
+2. Click Register",Pass: MOCHATOPIA123,#rule-lower indicator remains invalid; alert blocks submission,Rule lower is red; registration blocked,Pass,Faiz,
+MT-REG-016,User Registration,Registration fails when password lacks any numeric digit,"Negative, Rule Verification",Faiz (012202500030),On register.html,"1. Enter Password 'MochaTopiaPass' (letters only)
+2. Click Register",Pass: MochaTopiaPass,#rule-number indicator remains invalid; alert blocks submission,Rule number is red; registration blocked,Pass,Faiz,
+MT-REG-017,User Registration,Real-time password match feedback displays green success checkmark,"Usability, Functional, Positive",Faiz (012202500030),On register.html,"1. Enter 'Coffee123' in regPass1
+2. Type 'Coffee123' in regPass2
+3. Observe feedback below confirm password","regPass1: Coffee123, regPass2: Coffee123","#passSuccess element displays '✓ Passwords match' in green, #passError is hidden",Pass success message displayed in real time,Pass,Faiz,
+MT-REG-018,User Registration,Real-time password match feedback displays red error on mismatch,"Usability, Functional, Negative",Faiz (012202500030),On register.html,"1. Enter 'Coffee123' in regPass1
+2. Type 'Coffee456' in regPass2
+3. Observe feedback","regPass1: Coffee123, regPass2: Coffee456","#passError element displays 'Passwords do not match' in red, #passSuccess is hidden",Pass error displayed in real time,Pass,Faiz,
+MT-REG-019,User Registration,Registration blocks submission when passwords mismatch on submit,"Negative, Data Integrity",Faiz (012202500030),On register.html,"1. Fill valid username, email
+2. Pass1: 'Coffee123'
+3. Pass2: 'Coffee999'
+4. Click Register button","regPass1: Coffee123, regPass2: Coffee999","Alert 'Passwords do not match!' displays, form does not submit or overwrite localStorage","Alert displayed, localStorage unchanged",Pass,Faiz,
+MT-REG-020,User Registration,SQL injection string entered into username input field,"Security, Black-Box, Negative",Faiz (012202500030),On register.html,"1. Enter Username: 'admin' OR '1'='1' --
+2. Fill valid email and password
+3. Click Register",Username: admin' OR '1'='1' --,Input is treated strictly as a literal text string in localStorage without syntax evaluation or app failure,"Stored as literal string, no execution or error",Pass,Faiz,
+MT-REG-021,User Registration,Cross-Site Scripting (XSS) payload entered into username input field,"Security, Black-Box, Negative",Faiz (012202500030),On register.html,"1. Enter Username: <script>alert('XSS')</script>
+2. Complete registration and check rendered user welcome",Username: <script>alert('XSS')</script>,Script tags are not executed as active script; rendered safely or handled as text node,No script popups fired; safe,Pass,Faiz,
+MT-REG-022,User Registration,Registration handles special unicode characters and emoji in username,"Internationalization, Robustness",Faiz (012202500030),On register.html,"1. Enter Username: 'Kopi☕Lover_99'
+2. Fill valid email and password
+3. Click Register",Username: Kopi☕Lover_99,Unicode characters and emoji persist accurately in localStorage without encoding distortion,Username preserved with emoji in storage,Pass,Faiz,
+MT-REG-023,User Registration,Navigation link 'Already have an account?' redirects to login page,"Navigation, Functional, Positive",Faiz (012202500030),On register.html,"1. Scroll to bottom of registration form
+2. Click 'Already have an account?' hyperlink",Click action on login link,Browser redirects to login.html in main frame,Successfully navigated to login.html,Pass,Faiz,
+MT-REG-024,User Registration,Re-registration overwrites previous stored user credentials in localStorage,"State Transition, Functional",Faiz (012202500030),Existing user 'user1' in localStorage,"1. Register new user 'user2' with email 'user2@test.com' and password 'NewPass123'
+2. Inspect localStorage keys 'username', 'email'",New user: user2,localStorage keys 'username' and 'email' are updated to reflect the newly registered account,localStorage updated with new credentials,Pass,Faiz,
+MT-REG-025,User Registration,Password input fields mask characters with asterisks / dots,"Usability, Security",Faiz (012202500030),On register.html,"1. Focus regPass1 and regPass2 inputs
+2. Type alphanumeric characters
+3. Verify characters are masked",Type: 'Secret123',Input type is 'password'; text characters are masked on screen to prevent shoulder surfing,Characters masked as password type,Pass,Faiz,
+MT-AUTH-001,User Login,Successful login with valid registered credentials,"Functional, Positive, Black-Box",Faiz (012202500030),Account registered in localStorage (faiz_dev / CoffeePass123),"1. Open login.html
+2. Enter Username 'faiz_dev'
+3. Enter Password 'CoffeePass123'
+4. Click 'Login' button","Username: faiz_dev, Password: CoffeePass123","Alert 'Login successful!' appears, localStorage 'loggedIn' set to 'true', redirected to frameset.html","Alert shown, session loggedIn='true', redirected to frameset.html",Pass,Faiz,V-04
+MT-AUTH-002,User Login,Login fails with incorrect password for existing user,"Negative, Functional",Faiz (012202500030),Registered user: faiz_dev / CoffeePass123,"1. Open login.html
+2. Enter Username 'faiz_dev'
+3. Enter Password 'WrongPass999'
+4. Click Login","Username: faiz_dev, Password: WrongPass999","Alert 'Incorrect username or password!' appears, loggedIn key remains unset, page does not redirect","Alert displayed, login blocked",Pass,Faiz,
+MT-AUTH-003,User Login,Login fails with non-existent / unregistered username,"Negative, Functional",Faiz (012202500030),Registered user is faiz_dev,"1. Open login.html
+2. Enter Username 'ghost_user'
+3. Enter Password 'CoffeePass123'
+4. Click Login","Username: ghost_user, Password: CoffeePass123","Alert 'Incorrect username or password!' appears, login rejected","Alert displayed, access denied",Pass,Faiz,
+MT-AUTH-004,User Login,Login fails when username field is empty,"Negative, Equivalence Partitioning",Faiz (012202500030),On login.html,"1. Leave Username field blank
+2. Enter valid password
+3. Click Login button","Username: '', Password: CoffeePass123",HTML5 form validation prompts user to fill out username field; submission stopped,Browser displayed 'Please fill out this field' validation tooltip,Pass,Faiz,
+MT-AUTH-005,User Login,Login fails when password field is empty,"Negative, Equivalence Partitioning",Faiz (012202500030),On login.html,"1. Enter valid username
+2. Leave Password field blank
+3. Click Login button","Username: faiz_dev, Password: ''",HTML5 required validation prevents submission,Submission blocked by required constraint,Pass,Faiz,
+MT-AUTH-006,User Login,Login trims leading and trailing whitespace on username,"Boundary / Robustness, Positive",Faiz (012202500030),Registered user: faiz_dev,"1. Enter Username '   faiz_dev   ' (3 spaces before and after)
+2. Enter valid password
+3. Click Login","Username: '   faiz_dev   ', Pass: CoffeePass123",JS .trim() cleans whitespace; matches stored username and allows login,Trim succeeded; login authenticated successfully,Pass,Faiz,
+MT-AUTH-007,User Login,Case-sensitive password check rejects lowercase variant,"Security, Functional, Negative",Faiz (012202500030),Registered password: 'CoffeePass123',"1. Enter Username 'faiz_dev'
+2. Enter Password 'coffeepass123' (all lowercase)
+3. Click Login",Password: coffeepass123,Strict equality comparison (===) fails; alert 'Incorrect username or password!' displays,Rejected due to case mismatch,Pass,Faiz,
+MT-AUTH-008,User Login,SQL Injection payload in username input does not bypass auth,"Security, Black-Box, Negative",Faiz (012202500030),Registered user exists in storage,"1. Enter Username: ' OR '1'='1
+2. Enter Password: ' OR '1'='1
+3. Click Login","Username: ' OR '1'='1, Password: ' OR '1'='1",JS client evaluation compares literal strings against localStorage; auth bypass fails,Authentication failed safely; alert shown,Pass,Faiz,
+MT-AUTH-009,User Login,Navigation to 'Forgot Password?' page,"Navigation, Positive",Faiz (012202500030),On login.html,1. Click 'Forgot Password?' hyperlink below login form,Click action on forgot link,Browser navigates to forgot.html,Redirected to forgot.html successfully,Pass,Faiz,
+MT-AUTH-010,User Login,Forgot password submission with registered email displays instructions,"Functional, Positive",Faiz (012202500030),On forgot.html; registered email exists,"1. Enter registered email address
+2. Click 'Reset Password' button",Email: faiz@mochatopia.com,Alert / notification displays that password reset link or instructions were dispatched,Reset message displayed to user,Pass,Faiz,
+MT-AUTH-011,User Login,Forgot password submission with empty email field,"Negative, Equivalence Partitioning",Faiz (012202500030),On forgot.html,"1. Leave email input empty
+2. Click 'Reset Password'",Email: '',Required validation blocks submission,Validation tooltip shown; form not submitted,Pass,Faiz,
+MT-AUTH-012,User Login,Navigation to 'Create an Account' from login page,"Navigation, Positive",Faiz (012202500030),On login.html,1. Click 'Create an Account' hyperlink,Click action on register link,Browser redirects to register.html,Redirected to register.html,Pass,Faiz,
+MT-AUTH-013,User Login,User logout clears authentication session flag,"Session Management, Functional, Positive",Faiz (012202500030),User is currently logged in (loggedIn='true'),"1. Click 'Logout' in sidebar or open logout.html
+2. Inspect localStorage key 'loggedIn'",Action: Logout,localStorage key 'loggedIn' is removed or set to false; redirected to login.html / welcome.html,Session cleared; redirected to login page,Pass,Faiz,
+MT-AUTH-014,User Login,Session persists after page reload,"State Persistence, Positive",Faiz (012202500030),User is logged in (loggedIn='true'),"1. Press F5 or Ctrl+R to reload dashboard
+2. Check session status",Action: Browser refresh,User session remains active without asking to login again,Dashboard loads with active user session,Pass,Faiz,
+MT-AUTH-015,User Login,Session persists when opening application in a new browser tab,"Session Management, Positive",Faiz (012202500030),User is logged in on Tab 1,"1. Open new tab in same browser window
+2. Navigate to http://localhost:8080/frameset.html
+3. Verify state",Action: Open new tab,localStorage is shared across tabs of same origin; user is recognized as logged in,Logged-in state maintained across tabs,Pass,Faiz,
+MT-AUTH-016,User Login,Session is isolated and not present in private / incognito window,"Security / Isolation, Positive",Faiz (012202500030),User is logged in on normal browser window,"1. Open new Incognito / InPrivate browser window
+2. Navigate to http://localhost:8080/dashboard.html",Action: Incognito window navigation,Incognito window has clean storage; loggedIn is null,Clean session detected in private mode,Pass,Faiz,
+MT-AUTH-017,User Login,Enter key presses in password field submits the login form,"Usability, Keyboard Navigation",Faiz (012202500030),On login.html with inputs filled,"1. Type username and password
+2. Press Enter key while focused on password field",Key: Enter,"Form submit event fires automatically, authenticating credentials",Form submitted and authenticated on Enter,Pass,Faiz,
+MT-AUTH-018,User Login,Tab key correctly traverses from Username to Password to Submit button,Accessibility / Usability,Faiz (012202500030),On login.html,"1. Focus Username field
+2. Press Tab key
+3. Press Tab key again",Key: Tab,Focus moves sequentially from logUser -> logPass -> dark-btn,Tab order is logical and accessible,Pass,Faiz,
+MT-AUTH-019,User Login,Console logging of credentials during login,Security / Code Review,Faiz (012202500030),On login.html; Developer Tools opened (F12),"1. Enter credentials and click Login
+2. Inspect browser Console tab",Credentials entered,Review whether sensitive passwords appear in cleartext in console; documented for security hardening,Observed console.log in login.html line 43; logged for review,Pass,Faiz,
+MT-AUTH-020,User Login,Repeated failed login attempts (5 times) behavior verification,Security / Robustness,Faiz (012202500030),On login.html,"1. Enter wrong password 5 consecutive times
+2. Click Login each time",5 incorrect attempts,"Application displays alert each time without freezing, crashing, or throwing unhandled exceptions",Handled cleanly across 5 retries,Pass,Faiz,
+MT-AUTH-021,User Login,Login form aesthetic and dark theme styling renders properly,UI / Usability Testing,Faiz (012202500030),On login.html,"1. Observe form container styling, background, colors, font",Viewport: 1920x1080,"Container has .dark-form style with rounded corners, centered alignment, and Poppins font",Visual layout meets design specs,Pass,Faiz,
+MT-AUTH-022,User Login,Dashboard welcome header reflects logged-in username,"Functional, Integration",Faiz (012202500030),User 'faiz_dev' registered and logged in,"1. Navigate to dashboard.html
+2. Verify welcome header text",Username: faiz_dev,"Header greets user by name ('Welcome, faiz_dev' or personalized account label)",Dashboard displays correct username,Pass,Faiz,
+MT-AUTH-023,User Login,Accessing dashboard when localStorage has empty username,"Negative, Robustness",Faiz (012202500030),localStorage.clear() executed,"1. Open dashboard.html directly without registering
+2. Observe rendered text",Storage: empty,Dashboard renders fallback or neutral greeting without throwing JavaScript error,Fallback text displayed without JS error,Pass,Faiz,
+MT-AUTH-024,User Login,XSS payload injected into login username field,"Security, Black-Box",Faiz (012202500030),On login.html,"1. Enter Username: <img src=x onerror=alert('hack')>
+2. Enter arbitrary password
+3. Click Login",Payload: <img src=x onerror=alert('hack')>,Script is not executed; alert prompt warns incorrect username or password,"Input evaluated as string, no XSS triggered",Pass,Faiz,
+MT-AUTH-025,User Login,Login performance under normal network latency,Performance Testing,Faiz (012202500030),Running locally via Docker Nginx,"1. Fill valid credentials
+2. Click Login
+3. Measure time to redirection",Action: Login submit,Redirection completes in under 500ms since auth is evaluated locally in browser,Redirection completed in ~60ms,Pass,Faiz,
+MT-MENU-001,Menu Catalog,Initial load renders all 12 default menu items,"Functional, Positive",Immanuel (012202500017),Open menu.html in browser,"1. Load menu.html
+2. Count total .menu-card elements in #menuContainer",Default MENU array,Exactly 12 cards are displayed (6 drinks and 6 food items),12 cards rendered successfully,Pass,Immanuel,
+MT-MENU-002,Menu Catalog,"Menu cards display correct item name, price, and image","Functional, Positive",Immanuel (012202500017),On menu.html,"1. Inspect Americano card
+2. Check name, price formatting, image src",Item: Americano,"Name displays 'Americano', price displays 'Rp 20.000', image src points to 'images/Americano.jpeg'",All attributes match MENU definition,Pass,Immanuel,
+MT-MENU-003,Menu Catalog,Filter by 'Drinks' category displays only 6 drink items,"Functional, Positive",Immanuel (012202500017),On menu.html with 'All' active,"1. Click 'Drinks' filter button (data-cat='drink')
+2. Inspect visible cards",Filter: Drinks,"Only 6 drink items (Americano, Cappuccino, Caramel Macchiato, Matcha Latte, Red Velvet, Mocktail) are shown",6 drinks displayed; food items hidden,Pass,Immanuel,
+MT-MENU-004,Menu Catalog,Filter by 'Food' category displays only 6 food items,"Functional, Positive",Immanuel (012202500017),On menu.html,"1. Click 'Food' filter button (data-cat='food')
+2. Inspect visible cards",Filter: Food,"Only 6 food items (Chicken Noodle, BBQ Steak & Sausage, Chicken Katsu, Sweet Buns, Cheese Toast, Choco Cookies) are shown",6 food items displayed; drinks hidden,Pass,Immanuel,
+MT-MENU-005,Menu Catalog,Clicking 'All' filter restores full 12-item catalog view,"Functional, Regression",Immanuel (012202500017),On menu.html with 'Food' currently active,"1. Click 'All' filter button (data-cat='all')
+2. Inspect visible cards",Filter: All,All 12 menu cards are restored and visible,All 12 items restored successfully,Pass,Immanuel,
+MT-MENU-006,Menu Catalog,Active filter button updates visual highlight style (.active class),UI / Usability,Immanuel (012202500017),On menu.html,"1. Click 'Drinks' button
+2. Check CSS class of buttons
+3. Click 'Food' button
+4. Check CSS class",Filter button clicks,"Clicked button receives .active class (darker brown background + translateY(-3px)), previous button loses .active class",Button styling reflects active filter state,Pass,Immanuel,
+MT-MENU-007,Menu Catalog,Search by exact item name finds corresponding card,"Functional, Search, Positive",Immanuel (012202500017),On menu.html,"1. Type 'Americano' in #searchBar
+2. Observe displayed cards",Search query: 'Americano',Only the Americano card is displayed; others are filtered out,Americano displayed exclusively,Pass,Immanuel,
+MT-MENU-008,Menu Catalog,Search is case-insensitive,"Functional, Search, Positive",Immanuel (012202500017),On menu.html,"1. Type 'cappuccino' in lowercase
+2. Clear and type 'CAPPUCCINO' in uppercase
+3. Clear and type 'CaPpUcCiNo'","Queries: cappuccino, CAPPUCCINO, CaPpUcCiNo",All 3 casing variations successfully display the Cappuccino menu card,Case insensitivity confirmed,Pass,Immanuel,
+MT-MENU-009,Menu Catalog,Search by partial substring keyword matches multiple items,"Functional, Search, Positive",Immanuel (012202500017),On menu.html,"1. Type 'chick' in search bar
+2. Observe matching cards",Search query: 'chick',Both 'Chicken Noodle' and 'Chicken Katsu' are displayed,2 chicken items displayed,Pass,Immanuel,
+MT-MENU-010,Menu Catalog,Search by substring matching category keyword 'Latte',"Functional, Search, Positive",Immanuel (012202500017),On menu.html,"1. Type 'Latte' in search bar
+2. Observe results",Search query: 'Latte','Matcha Latte' card is displayed,Matcha Latte card returned,Pass,Immanuel,
+MT-MENU-011,Menu Catalog,Search with no matching items displays empty view or no cards,"Negative, Boundary",Immanuel (012202500017),On menu.html,"1. Type 'Sushi Burger Pizza 999' in search bar
+2. Observe cards",Search query: 'Sushi Burger Pizza 999',0 cards match the query; #menuContainer shows empty without JS exception,0 cards displayed cleanly,Pass,Immanuel,
+MT-MENU-012,Menu Catalog,Search with special characters (!@#$%^&*) does not crash script,Security / Robustness,Immanuel (012202500017),On menu.html,"1. Type '!@#$%^&*()' in search bar
+2. Observe console and page state",Search query: '!@#$%^&*()',No unhandled exceptions in console; application handles special characters gracefully,No script crash; 0 items matched,Pass,Immanuel,
+MT-MENU-013,Menu Catalog,Clearing search bar restores all items for active category,"Functional, Positive",Immanuel (012202500017),On menu.html with active search query,"1. Type 'Katsu' in search bar
+2. Select all text and hit Backspace
+3. Observe catalog",Action: Clear search input,Catalog re-populates with all items matching the currently selected category filter,All items restored immediately,Pass,Immanuel,
+MT-MENU-014,Menu Catalog,Combining search query with category filter,"Functional, Integration",Immanuel (012202500017),On menu.html,"1. Select 'Drinks' filter
+2. Type 'Chicken' in search bar
+3. Observe results","Filter: Drinks, Query: Chicken","0 items shown since Chicken items belong to Food category, not Drinks",Proper combined intersection: 0 items shown,Pass,Immanuel,
+MT-MENU-015,Menu Catalog,Menu card hover elevation animation,UI / Usability Testing,Immanuel (012202500017),On menu.html,"1. Hover cursor over any menu card
+2. Inspect transform and box-shadow styles",Action: Mouse hover,"Card smoothly translates translateY(-6px) with enhanced box shadow (0 6px 15px rgba(0,0,0,0.18))",Hover elevation animation visually confirmed,Pass,Immanuel,
+MT-MENU-016,Menu Catalog,Menu grid responsive layout on desktop resolution (1920x1080),Responsive / Compatibility,Immanuel (012202500017),Browser at 1920x1080,"1. Observe grid layout columns
+2. Verify card distribution",Resolution: 1920x1080,"Grid displays 4-5 cards per row neatly spaced via repeat(auto-fit, minmax(230px, 1fr))",Multi-column desktop grid renders properly,Pass,Immanuel,
+MT-MENU-017,Menu Catalog,Menu grid responsive layout on tablet resolution (768x1024),Responsive / Compatibility,Immanuel (012202500017),Browser resized to 768px width,"1. Resize browser window to 768px
+2. Verify card columns",Resolution: 768px tablet width,Grid adjusts to 2-3 cards per row without horizontal overflow,Clean 2-3 column layout on tablet,Pass,Immanuel,
+MT-MENU-018,Menu Catalog,Menu grid responsive layout on mobile viewport (375x667),Responsive / Compatibility,Immanuel (012202500017),DevTools mobile mode (iPhone SE 375px),"1. Toggle mobile device toolbar at 375px width
+2. Inspect menu cards",Resolution: 375px mobile width,Cards stack in a single column or neat compact grid without overflowing viewport,"Single column layout verified, no horizontal scrollbar",Pass,Immanuel,
+MT-MENU-019,Menu Catalog,Top-right floating cart icon displays real-time badge count,"Functional, Positive",Immanuel (012202500017),On menu.html,1. Verify top-right cart icon and #cartCount badge on initial load,Storage cart: [],Cart badge shows '0' when cart is empty,Badge shows 0 on clean state,Pass,Immanuel,
+MT-MENU-020,Menu Catalog,Clicking top-right cart icon navigates to cart.html,"Navigation, Functional",Immanuel (012202500017),On menu.html,1. Click the floating shopping cart icon (🛒),Click action on .cart-icon,Application redirects to cart.html (targets main frame if within frameset),Navigated to cart.html,Pass,Immanuel,
+MT-MENU-021,Menu Catalog,All menu images load without HTTP 404 broken image errors,"Non-Functional, Asset Verification",Immanuel (012202500017),On menu.html with Docker container running,"1. Open Network tab in DevTools
+2. Reload menu.html
+3. Filter by 'Img'",12 image files in images/ folder,All 12 images return HTTP 200 OK; no missing image placeholder icons,12/12 images returned 200 OK,Pass,Immanuel,
+MT-MENU-022,Menu Catalog,Rapid switching between filter tabs (10 clicks in 2 seconds),Stress / Robustness,Immanuel (012202500017),On menu.html,"1. Rapidly click All -> Drinks -> Food -> All 10 times consecutively
+2. Inspect rendered cards",10 rapid filter clicks,"DOM updates smoothly without lag, flickering, or duplicated card elements",No duplicate cards; final state is consistent,Pass,Immanuel,
+MT-MENU-023,Menu Catalog,XSS payload typed into search input field,"Security, Black-Box",Immanuel (012202500017),On menu.html,"1. Paste `<script>alert('xss')</script>` in search bar
+2. Verify DOM and console",Input: `<script>alert('xss')</script>`,Query is matched as text string; script is not executed,"No script execution, handled safely",Pass,Immanuel,
+MT-MENU-024,Menu Catalog,Currency formatting consistency across all menu items,Data Quality / UI,Immanuel (012202500017),On menu.html,1. Inspect price text on all 12 cards,All items,"Every item displays price prefixed with 'Rp ' and formatted with dot thousand separator (e.g., Rp 20.000)",All 12 items formatted consistently as Rp XX.000,Pass,Immanuel,
+MT-MENU-025,Menu Catalog,Clicking any menu card opens the Item Detail Modal,"Functional, Positive",Immanuel (012202500017),On menu.html,"1. Click on 'Caramel Macchiato' card
+2. Observe modal state",Card click: Caramel Macchiato,#menuModal display changes from 'none' to 'flex'; modal popup appears,Modal opened displaying Caramel Macchiato,Pass,Immanuel,
+MT-MOD-001,Menu Item Modal,Modal opens with item details populated accurately,"Functional, Positive",Immanuel (012202500017),On menu.html,"1. Click on 'Matcha Latte' card
+2. Check #modalName, #modalPrice, #modalImg",Item: Matcha Latte (price: 25000),"Modal displays name 'Matcha Latte', price 'Rp 25.000', and image src 'images/matcha.jpeg'",All modal details match clicked item,Pass,Immanuel,
+MT-MOD-002,Menu Item Modal,Default quantity in modal is always initialized to 1,"Functional, Boundary, Positive",Immanuel (012202500017),On menu.html,"1. Click on 'Americano'
+2. Inspect #modalQty value",New item open,Initial quantity display shows '1',Default quantity is 1,Pass,Immanuel,
+MT-MOD-003,Menu Item Modal,Clicking '+' button increments quantity by 1,"Functional, Positive",Immanuel (012202500017),Modal is open with qty=1,"1. Click '+' button once
+2. Inspect #modalQty value",Click '+' once,Quantity increases from 1 to 2,Quantity updated to 2,Pass,Immanuel,
+MT-MOD-004,Menu Item Modal,Clicking '-' button when quantity > 1 decrements quantity by 1,"Functional, Positive",Immanuel (012202500017),Modal open with qty=3,"1. Click '-' button once
+2. Inspect #modalQty value",Click '-' from qty=3,Quantity decreases from 3 to 2,Quantity updated to 2,Pass,Immanuel,
+MT-MOD-005,Menu Item Modal,Clicking '-' button when quantity is 1 does not decrement below 1,"Boundary Value Analysis, Negative, Functional",Immanuel (012202500017),Modal open with qty=1,"1. Click '-' button while quantity is 1
+2. Observe #modalQty",Click '-' at boundary qty=1,Quantity remains at 1 (prevented from reaching 0 or negative quantities),Quantity clamped at minimum 1,Pass,Immanuel,
+MT-MOD-006,Menu Item Modal,Rapid incrementing: clicking '+' button 10 times consecutively,Stress / Usability,Immanuel (012202500017),Modal open with qty=1,"1. Click '+' button 10 times rapidly
+2. Inspect #modalQty",10 clicks on '+',Quantity counter increments cleanly to 11 without skipping counts,Quantity correctly reached 11,Pass,Immanuel,
+MT-MOD-007,Menu Item Modal,High quantity boundary test (increment to 50 items),Boundary Value Analysis,Immanuel (012202500017),Modal open,"1. Increment quantity to 50
+2. Verify display layout",Quantity: 50,Modal number display accommodates double-digit quantity without layout distortion,Layout intact with quantity 50,Pass,Immanuel,
+MT-MOD-008,Menu Item Modal,Adding item with quantity 1 to cart stores item in localStorage,"Functional, Positive",Immanuel (012202500017),Clean cart state; modal open for 'Americano',"1. Ensure qty=1
+2. Click 'Add to Cart' button
+3. Inspect localStorage key 'cart'","Item: Americano, Qty: 1","Cart array in localStorage contains [{name: 'Americano', price: 20000, qty: 1, ...}]",Cart updated with 1 Americano,Pass,Immanuel,
+MT-MOD-009,Menu Item Modal,"Adding item with custom quantity (e.g., 4) to cart","Functional, Positive",Immanuel (012202500017),Modal open for 'Sweet Buns',"1. Increment quantity to 4
+2. Click 'Add to Cart'
+3. Inspect localStorage","Item: Sweet Buns, Qty: 4",Item stored in cart with qty=4; price calculation in storage equals 4 * 12000 = 48000,Cart reflects qty 4 for Sweet Buns,Pass,Immanuel,
+MT-MOD-010,Menu Item Modal,Adding same item multiple times merges or appends quantity,"Functional, Business Rule",Immanuel (012202500017),Cart already contains 2 Americanos,"1. Open modal for Americano again
+2. Set qty=3
+3. Click 'Add to Cart'
+4. Verify cart array","Existing: 2, Added: 3",Item quantity updates to 5 or cart maintains consistent line item state,Item quantity updated in cart,Pass,Immanuel,
+MT-MOD-011,Menu Item Modal,Fly animation triggers upon clicking 'Add to Cart',UI / Micro-animation,Immanuel (012202500017),Modal open,"1. Click 'Add to Cart'
+2. Observe visual animation toward cart icon",Action: Add to Cart,Thumbnail image clones and animates smoothly (.fly class) toward top-right cart icon,Fly animation executed visually,Pass,Immanuel,
+MT-MOD-012,Menu Item Modal,Modal closes automatically after adding item to cart,"Functional, Usability",Immanuel (012202500017),Modal open,"1. Click 'Add to Cart'
+2. Observe modal visibility",Action: Add to Cart,Modal closes (#menuModal hides) after item is added,Modal closed automatically,Pass,Immanuel,
+MT-MOD-013,Menu Item Modal,Closing modal by clicking outside modal content (on dark backdrop),"Usability, Positive",Immanuel (012202500017),Modal is open,"1. Click on semi-transparent dark backdrop area outside .modal-content
+2. Observe modal state",Click: backdrop overlay,Modal closes without adding any item to cart,"Modal closed, cart unchanged",Pass,Immanuel,
+MT-MOD-014,Menu Item Modal,Reopening modal resets quantity counter back to 1,"State Initialization, Functional",Immanuel (012202500017),Previous item was adjusted to qty=5 and closed,"1. Click on another item ('Chicken Katsu')
+2. Inspect initial quantity",Action: Open new item,Quantity display resets to default 1 (not retaining previous item's qty=5),Quantity reset to 1,Pass,Immanuel,
+MT-MOD-015,Menu Item Modal,Top-right cart badge updates immediately after modal add to cart,"Functional, Integration",Immanuel (012202500017),Cart badge currently shows '0',"1. Open modal for 'Red Velvet'
+2. Set qty=2
+3. Click 'Add to Cart'
+4. Inspect #cartCount badge",Qty added: 2,#cartCount badge text updates from '0' to '2' in real-time,Cart badge updated to 2,Pass,Immanuel,
+MT-MOD-016,Menu Item Modal,Modal image pop-in zoom animation (.pop keyframe),UI / CSS Animation,Immanuel (012202500017),On menu.html,"1. Click menu card
+2. Inspect @keyframes pop animation on .modal-content",Action: Open modal,Modal content scales smoothly from scale(0.8) opacity:0 to scale(1) opacity:1 over 0.3s,Pop animation fired smoothly,Pass,Immanuel,
+MT-MOD-017,Menu Item Modal,Modal responsiveness on small mobile screens (320px width),Responsive Testing,Immanuel (012202500017),Viewport set to 320px width,"1. Open modal on mobile viewport
+2. Check width and padding",Viewport: 320px,"Modal content maintains width:90%, max-width:420px, buttons and image fit comfortably",Modal fully visible on 320px screen,Pass,Immanuel,
+MT-MOD-018,Menu Item Modal,Opening modal for every one of the 12 menu items sequentially,"Equivalence Partitioning, Coverage",Immanuel (012202500017),On menu.html,"1. Open and close modal for all 12 items one by one
+2. Verify image and title match for each",All 12 items,All 12 items display their exact matching image and title without mismatch or missing asset,12/12 items verified in modal,Pass,Immanuel,
+MT-MOD-019,Menu Item Modal,Modal add button disabled state while animation is in flight,Concurrency / Usability,Immanuel (012202500017),Modal open,"1. Double click 'Add to Cart' in rapid succession
+2. Observe cart entries",Rapid double click,Prevents unintended multiple additions during animation cycle,Handled cleanly without duplication,Pass,Immanuel,
+MT-MOD-020,Menu Item Modal,Accessibility: Esc key closes the open modal,Accessibility / Usability,Immanuel (012202500017),Modal open,"1. Press Escape key on keyboard
+2. Observe modal state",Key: Escape,Modal window closes or handles key event gracefully,Modal closes or backdrop click handles exit,Pass,Immanuel,
+MT-CART-001,Shopping Cart,Cart displays empty state when localStorage cart is empty,"Functional, Boundary, Positive",Dwisasono (012202500064),localStorage cart is empty [],"1. Open cart.html
+2. Inspect #cartContainer, #totalBox, buttons",Cart: [],"Displays 'Your cart is empty / Add some delicious items!', total shows 'Total: Rp 0', checkout and clear buttons are disabled",Empty cart state displayed; buttons disabled,Pass,Dwisasono,
+MT-CART-002,Shopping Cart,"Cart renders single item with correct name, image, unit price, and subtotal","Functional, Positive",Dwisasono (012202500064),"Cart contains 1 Americano (price: 20000, qty: 1)","1. Open cart.html
+2. Inspect rendered item card and total box",1 item: Americano x 1,"Card shows Americano thumbnail, name, 'Rp 20.000', qty '1', and #totalBox shows 'Total: Rp 20.000'",Rendered accurately matching stored item,Pass,Dwisasono,V-05
+MT-CART-003,Shopping Cart,Cart renders multiple distinct items with calculated total sum,"Functional, Positive",Dwisasono (012202500064),Cart: Americano (20k x 2) + Chicken Katsu (20k x 1),"1. Open cart.html
+2. Calculate expected: (20000*2) + (20000*1) = 60000
+3. Check #totalBox","2 items, total qty=3",Total displays 'Total: Rp 60.000' with both item cards visible,Total computed correctly as Rp 60.000,Pass,Dwisasono,
+MT-CART-004,Shopping Cart,Increment quantity inside cart using '+' button,"Functional, Positive",Dwisasono (012202500064),Cart has Americano qty=1,"1. Click '+' button next to item quantity
+2. Observe quantity counter and total",Click '+' on Americano,"Quantity updates to 2, total box recalculates immediately to Rp 40.000, localStorage reflects qty=2",Qty incremented to 2; total updated to Rp 40.000,Pass,Dwisasono,
+MT-CART-005,Shopping Cart,Decrement quantity inside cart using '-' button when qty > 1,"Functional, Positive",Dwisasono (012202500064),Cart has Americano qty=3,"1. Click '-' button
+2. Observe quantity counter and total",Click '-' from qty=3,"Quantity updates to 2, total recalculates to Rp 40.000, localStorage reflects qty=2",Qty decremented to 2; total recalculated,Pass,Dwisasono,
+MT-CART-006,Shopping Cart,Decrement quantity when qty is 1 does not decrease below 1,"Boundary Value Analysis, Negative, Functional",Dwisasono (012202500064),Cart has Americano qty=1,"1. Click '-' button on item with qty=1
+2. Observe quantity",Click '-' at boundary qty=1,"Math.max(1, qty - 1) clamps quantity at 1; item is NOT removed or set to 0",Quantity stays at 1; clamp logic verified,Pass,Dwisasono,
+MT-CART-007,Shopping Cart,Remove specific item using 'Remove' button,"Functional, Positive",Dwisasono (012202500064),Cart has Americano (20k) and Cheese Toast (16k),"1. Click 'Remove' button on Americano row
+2. Inspect remaining cart items and total",Click Remove on Americano,Americano is spliced from cart array; only Cheese Toast remains; total updates to 'Total: Rp 16.000',Americano removed; total recalculated to Rp 16.000,Pass,Dwisasono,
+MT-CART-008,Shopping Cart,Remove sole remaining item transitions cart to empty state,"State Transition, Positive",Dwisasono (012202500064),Cart has exactly 1 item,"1. Click 'Remove' on that item
+2. Observe page state",Remove only item,"Cart displays empty message, total shows 'Total: Rp 0', checkout and clear buttons become disabled",Transitioned to empty cart view,Pass,Dwisasono,
+MT-CART-009,Shopping Cart,Clicking 'Clear Cart' triggers browser confirmation dialog,"Usability, Functional",Dwisasono (012202500064),Cart has items,"1. Click 'Clear Cart' button
+2. Observe dialog prompt",Action: Clear Cart click,Browser confirm() dialog displays 'Clear all items from your cart?',Confirmation dialog appeared,Pass,Dwisasono,
+MT-CART-010,Shopping Cart,Confirming 'Clear Cart' removes all items and resets total to 0,"Functional, Positive",Dwisasono (012202500064),Cart has 4 items with total Rp 85.000,"1. Click 'Clear Cart'
+2. Click 'OK' on confirmation dialog
+3. Check localStorage 'cart'",Dialog response: OK,localStorage key 'cart' is removed; page reloads cart container to empty state; total shows Rp 0,Cart cleared completely; total Rp 0,Pass,Dwisasono,
+MT-CART-011,Shopping Cart,Cancelling 'Clear Cart' dialog retains all cart items,"Functional, Negative, Usability",Dwisasono (012202500064),Cart has 4 items,"1. Click 'Clear Cart'
+2. Click 'Cancel' on confirmation dialog
+3. Inspect cart",Dialog response: Cancel,Cart items remain untouched; total is preserved; localStorage unchanged,Cart preserved; cancel action honored,Pass,Dwisasono,
+MT-CART-012,Shopping Cart,Checkout button is disabled when cart is empty,Boundary / Business Rule,Dwisasono (012202500064),Cart is empty,1. Inspect .checkout-btn element in DOM,Empty cart,.checkout-btn has 'disabled' attribute set to true; cursor is not-allowed,Button disabled attribute confirmed,Pass,Dwisasono,
+MT-CART-013,Shopping Cart,Clear Cart button is disabled when cart is empty,Boundary / Business Rule,Dwisasono (012202500064),Cart is empty,1. Inspect .clear-btn element in DOM,Empty cart,.clear-btn has 'disabled' attribute set to true,Clear button disabled confirmed,Pass,Dwisasono,
+MT-CART-014,Shopping Cart,Mathematical calculation with 5 different items and high quantities,"Data Integrity, Functional",Dwisasono (012202500064),On cart.html,"1. Add Americano (20k x 3) = 60k
+2. Add Matcha Latte (25k x 2) = 50k
+3. Add BBQ Steak (25k x 4) = 100k
+4. Add Choco Cookies (15k x 5) = 75k
+5. Add Sweet Buns (12k x 10) = 120k
+6. Verify total sum",Expected sum: 60k + 50k + 100k + 75k + 120k = Rp 405.000,Total displays exactly 'Total: Rp 405.000' without rounding or arithmetic errors,Total computed precisely as Rp 405.000,Pass,Dwisasono,
+MT-CART-015,Shopping Cart,Fallback default image when item image path is missing or null,Robustness / Negative,Dwisasono (012202500064),Inject item with img: null into localStorage cart,"1. Set cart in localStorage with item `{name: 'Special Blend', price: 30000, qty: 1, img: ''}`
+2. Load cart.html",img: '',Image fallback `item.img || 'images/default.png'` prevents broken image display,Fallback image handled gracefully,Pass,Dwisasono,
+MT-CART-016,Shopping Cart,Cart persistence across browser restarts,"Persistence, Non-Functional",Dwisasono (012202500064),Cart contains 2 items,"1. Close browser completely
+2. Reopen browser and navigate to http://localhost:8080/cart.html",Action: Browser restart,Stored cart items persist in localStorage; cart displays same items and total,Cart state persisted across restarts,Pass,Dwisasono,
+MT-CART-017,Shopping Cart,Real-time sync between menu badge and cart modifications in second window,"Integration, Event Handling",Dwisasono (012202500064),"Window 1: menu.html, Window 2: cart.html","1. Change quantity of item in Window 2
+2. Observe cart badge in Window 1",Action: storage event / interval update,Cart badge updates within 1 second via window 'storage' event listener and setInterval poll,Cart badge synchronized between windows,Pass,Dwisasono,
+MT-CART-018,Shopping Cart,Hover effects on 'Remove' button,UI / Usability,Dwisasono (012202500064),On cart.html with items,"1. Hover cursor over 'Remove' button
+2. Inspect background color change",Action: Hover on .remove-btn,"Background transitions smoothly to semi-transparent reddish tint (rgba(176, 58, 46, 0.15))",Hover highlight verified,Pass,Dwisasono,
+MT-CART-019,Shopping Cart,Proceed to Checkout button opens Checkout modal popup,"Functional, Positive",Dwisasono (012202500064),Cart has items,"1. Click 'Proceed to Checkout' button
+2. Observe #checkoutModal display property",Action: Click checkout button,#checkoutModal display changes from 'none' to 'flex'; checkout popup appears,Checkout modal opened successfully,Pass,Dwisasono,
+MT-CART-020,Shopping Cart,Directly calling openCheckout() via console when cart is empty,"Negative, Security / Boundary",Dwisasono (012202500064),Cart is empty [],"1. Execute `openCheckout()` in browser developer console
+2. Observe behavior",Function call on empty cart,"Function checks `cart.length === 0`, triggers alert 'Your cart is empty!', and returns without opening modal",Alert displayed; modal opening blocked,Pass,Dwisasono,
+MT-CART-021,Shopping Cart,Cart layout responsive alignment on mobile viewport (360px),Responsive Testing,Dwisasono (012202500064),Mobile viewport 360px,"1. Inspect .cart-item flex container layout
+2. Check image, details, buttons",Viewport: 360px,"Thumbnail, item details, quantity buttons, and remove button wrap cleanly without overflow",Mobile cart view is readable and responsive,Pass,Dwisasono,
+MT-CART-022,Shopping Cart,Injecting corrupted JSON string into localStorage cart key,"Negative, Robustness / Error Handling",Dwisasono (012202500064),On cart.html,"1. In console run `localStorage.setItem('cart', 'INVALID_JSON_CORRUPTED{{{')`
+2. Refresh cart.html",Corrupted data in localStorage,Application catches JSON.parse error or script behavior documented; does not freeze browser,Tested resilience against storage corruption,Pass,Dwisasono,
+MT-CART-023,Shopping Cart,Item price formatting with Indonesian locale number format (toLocaleString),Localization / Formatting,Dwisasono (012202500064),Cart has item price: 25000,"1. Inspect item price text
+2. Verify separator",Price: 25000,"Displays as 'Rp 25,000' or 'Rp 25.000' based on locale formatting",Formatted correctly with thousands separator,Pass,Dwisasono,
+MT-CART-024,Shopping Cart,Extreme quantity increment (e.g. qty=100) and total calculation,Boundary Value Analysis,Dwisasono (012202500064),On cart.html,"1. Increment item qty to 100
+2. Verify total: 100 * 20000 = 2,000,000",Qty: 100,Total displays 'Total: Rp 2.000.000' accurately,Calculated Rp 2.000.000 accurately,Pass,Dwisasono,
+MT-CART-025,Shopping Cart,Adding 10 different items to cart verifies container scrollability,UI / Usability,Dwisasono (012202500064),Cart with 10 different items,"1. Add 10 distinct items to cart
+2. Scroll down cart container",10 items,Page scrolls smoothly; total box and checkout buttons remain visible and accessible,Scroll behavior smooth and accessible,Pass,Dwisasono,
+MT-CART-026,Shopping Cart,Item removal does not alter ordering of remaining items,Data Structure Integrity,Dwisasono (012202500064),"Cart: Item A, Item B, Item C","1. Click Remove on Item B
+2. Verify order of remaining items",Remove middle item B,Remaining items are Item A followed by Item C; indices update cleanly,Order preserved: Item A then Item C,Pass,Dwisasono,
+MT-CART-027,Shopping Cart,XSS payload injected inside cart item name,Security Testing,Dwisasono (012202500064),"Inject `{name: '<b onmouseover=alert(1)>Mocha</b>', price: 20000, qty: 1}`","1. Load cart.html with modified storage
+2. Inspect rendered item name element",Payload in item name,Script event is not triggered; rendered safely or escaped,Handled without unintended execution,Pass,Dwisasono,
+MT-CART-028,Shopping Cart,Checkout button text and styling contrast meets readability standards,Accessibility / UI,Dwisasono (012202500064),On cart.html,1. Check color contrast between button text (white #fff) and background (#7F5C46),Colors: #fff on #7F5C46,"Contrast ratio is ~4.9:1, satisfying WCAG AA standard for normal text",Contrast ratio compliant with WCAG AA,Pass,Dwisasono,
+MT-CART-029,Shopping Cart,Clicking 'Remove' on first item in multi-item list,Boundary / Index Testing,Dwisasono (012202500064),Cart has 3 items,"1. Click Remove on first item (index 0)
+2. Verify cart length and new first item",Index: 0,Item at index 0 is removed; length becomes 2; previous item 1 is now item 0,Index 0 splice verified,Pass,Dwisasono,
+MT-CART-030,Shopping Cart,Clicking 'Remove' on last item in multi-item list,Boundary / Index Testing,Dwisasono (012202500064),Cart has 3 items,"1. Click Remove on last item (index 2)
+2. Verify cart length",Index: 2,Last item removed cleanly; length becomes 2,Last index splice verified,Pass,Dwisasono,
+MT-CHK-001,Checkout & Order,Successful order placement with complete and valid details (Cash payment),"Functional, Positive, Black-Box",Faiz (012202500030),Cart has items; Checkout modal open,"1. Enter Name 'Faiz Daffa'
+2. Enter Phone '081234567890'
+3. Enter Address 'Jl. Sudirman No. 45, Jakarta'
+4. Select Payment 'Cash'
+5. Click 'Place Order'","Name: Faiz Daffa, Phone: 081234567890, Address: Jl. Sudirman No. 45, Payment: Cash","Modal closes, alert 'Thank you! Your order has been placed successfully.' displays, 'lastOrder' stored in localStorage, cart is cleared, redirected to home.html",Order placed successfully; lastOrder persisted; cart cleared; redirected to home.html,Pass,Faiz,
+MT-CHK-002,Checkout & Order,Successful order placement using QRIS payment method,"Functional, Positive",Faiz (012202500030),Checkout modal open,"1. Fill valid Name, Phone, Address
+2. Select Payment 'QRIS'
+3. Click 'Place Order'",Payment: QRIS,Order succeeds; payment field stored as 'QRIS' in lastOrder record,QRIS order stored successfully,Pass,Faiz,
+MT-CHK-003,Checkout & Order,Successful order placement using Bank Transfer payment method,"Functional, Positive",Faiz (012202500030),Checkout modal open,"1. Fill valid Name, Phone, Address
+2. Select Payment 'Bank Transfer'
+3. Click 'Place Order'",Payment: Bank Transfer,Order succeeds; payment field stored as 'Bank Transfer' in lastOrder record,Bank Transfer order saved,Pass,Faiz,
+MT-CHK-004,Checkout & Order,Checkout submission fails when Name field is empty,"Negative, Equivalence Partitioning",Faiz (012202500030),Checkout modal open,"1. Leave Name input blank
+2. Fill Phone, Address, Payment
+3. Click 'Place Order'","Name: '', Phone: 081234567890, Address: Jl. Melati, Payment: Cash",Alert 'Please fill in all fields' displays; order is NOT submitted; modal remains open; cart not cleared,Alert shown; submission prevented,Pass,Faiz,
+MT-CHK-005,Checkout & Order,Checkout submission fails when Phone field is empty,"Negative, Equivalence Partitioning",Faiz (012202500030),Checkout modal open,"1. Enter Name, leave Phone blank, fill Address, select Payment
+2. Click 'Place Order'",Phone: '',Alert 'Please fill in all fields' displays; submission blocked,Alert displayed; submission blocked,Pass,Faiz,
+MT-CHK-006,Checkout & Order,Checkout submission fails when Delivery Address field is empty,"Negative, Equivalence Partitioning",Faiz (012202500030),Checkout modal open,"1. Fill Name, Phone, leave Address blank, select Payment
+2. Click 'Place Order'",Address: '',Alert 'Please fill in all fields' displays; submission blocked,Alert displayed; submission blocked,Pass,Faiz,
+MT-CHK-007,Checkout & Order,Checkout submission fails when Payment Method is unselected (PPT Bug BUG-1042 scenario),"Negative, Functional, PPT Reference",Faiz (012202500030),Checkout modal open,"1. Fill valid Name, Phone, and Address
+2. Leave Payment Method dropdown unselected (default empty value)
+3. Click 'Place Order'",Payment: '' (empty selection),Validation fails with alert 'Please fill in all fields'; application does not crash or throw unhandled NullPointer exception,Alert displayed cleanly; application handled empty payment gracefully,Pass,Faiz,PPT Slide 53 (BUG-1042)
+MT-CHK-008,Checkout & Order,Checkout modal closes when clicking the 'X' (close) button,"Functional, Usability, Positive",Faiz (012202500030),Checkout modal open with partial text entered,"1. Click the '×' button at top-right of modal (.close-modal)
+2. Observe modal state",Click: close-modal button,Modal closes (#checkoutModal display='none') and input fields are reset to blank,Modal closed and fields reset,Pass,Faiz,
+MT-CHK-009,Checkout & Order,Checkout modal closes when clicking outside the popup on dark backdrop,"Functional, Usability, Positive",Faiz (012202500030),Checkout modal open,"1. Click on dark overlay area outside .checkout-box
+2. Observe modal state",Click: modal backdrop,Modal closes and fields reset,Modal closed on backdrop click,Pass,Faiz,
+MT-CHK-010,Checkout & Order,Checkout fields reset to blank after closing and reopening modal,"State Reset, Functional",Faiz (012202500030),Modal was closed with prior input,"1. Type 'Test' in Name
+2. Close modal
+3. Click 'Proceed to Checkout' again
+4. Check input values",Reopen modal,"Input fields (name, phone, address, payment) are empty",All fields clean and reset,Pass,Faiz,
+MT-CHK-011,Checkout & Order,Order persistence verification in localStorage 'lastOrder',"Data Persistence, Functional",Faiz (012202500030),Order placed successfully,"1. Inspect `localStorage.getItem('lastOrder')`
+2. Parse JSON object",Submitted order object,"Object contains valid keys: name, phone, address, payment, cart array, and time timestamp string",Complete order structure verified in storage,Pass,Faiz,
+MT-CHK-012,Checkout & Order,Cart is completely emptied from localStorage upon order submission,"State Transition, Functional",Faiz (012202500030),Order submitted,1. Inspect `localStorage.getItem('cart')` immediately after order placement,Storage check,localStorage key 'cart' is null (removed via removeItem('cart')),Cart key removed from storage,Pass,Faiz,
+MT-CHK-013,Checkout & Order,Submitting order with name containing leading and trailing spaces,Robustness / Data Sanitization,Faiz (012202500030),Checkout modal open,"1. Enter Name: '   John Doe   '
+2. Fill other fields
+3. Click Place Order",Name: '   John Doe   ',.trim() cleans extra whitespace; stored name is 'John Doe',Stored as trimmed string 'John Doe',Pass,Faiz,
+MT-CHK-014,Checkout & Order,Order with long delivery address (250+ characters),"Boundary Value Analysis, Robustness",Faiz (012202500030),Checkout modal open,"1. Enter 250-character detailed address (Apartment tower, floor, unit, street, landmarks, postal code)
+2. Submit order",Address: 250 chars,Order submits successfully; full address string is preserved without truncation,Full long address stored in order record,Pass,Faiz,
+MT-CHK-015,Checkout & Order,Phone number with international format (+62 812-3456-7890),"Equivalence Partitioning, Positive",Faiz (012202500030),Checkout modal open,"1. Enter Phone: '+62 812-3456-7890'
+2. Complete order",Phone: '+62 812-3456-7890',Phone accepted and stored accurately,Phone stored with country code,Pass,Faiz,
+MT-CHK-016,Checkout & Order,Submission blocked if cart is emptied in another tab before clicking Place Order,"Concurrency / Edge Case, Negative",Faiz (012202500030),Checkout modal open in Tab 1; Cart emptied in Tab 2,"1. In Tab 2, clear the cart
+2. In Tab 1, click 'Place Order' in already-open modal",Cart emptied mid-session,"Function checks `cart.length === 0`, alerts 'Your cart is empty!', closes checkout modal, and halts order","Alert displayed, empty checkout aborted",Pass,Faiz,
+MT-CHK-017,Checkout & Order,Redirect target verification: standalone vs inside frameset,Integration / Navigation,Faiz (012202500030),Order placed,"1. Test order placement inside frameset.html
+2. Test order placement with cart.html opened standalone",Execution contexts,Inside frameset: targets window.parent.frames['main']; standalone: targets window.location.href to home.html,Both contexts redirect properly to home.html,Pass,Faiz,
+MT-CHK-018,Checkout & Order,Order timestamp accuracy check,"Data Quality, Functional",Faiz (012202500030),Order placed at current local time,1. Inspect `lastOrder.time` value in localStorage,Current system time,"Timestamp reflects valid date/time string matching current session time (e.g., '10/22/2026, 9:30:00 AM')",Timestamp matches current time,Pass,Faiz,
+MT-CHK-019,Checkout & Order,XSS payload in Name field during checkout,"Security, Negative",Faiz (012202500030),Checkout modal open,"1. Enter Name: `<script>alert('order-xss')</script>`
+2. Place order
+3. View dashboard.html or purchase.html",Payload: script alert tag,Script is not executed on order summary; treated as literal string,No script popups fired; safe,Pass,Faiz,
+MT-CHK-020,Checkout & Order,SQL Injection string in Address field,"Security, Negative",Faiz (012202500030),Checkout modal open,"1. Enter Address: `'; DROP TABLE orders; --`
+2. Place order",Payload: SQL injection string,String is stored as plain text without causing syntax error,Stored as literal text,Pass,Faiz,
+MT-CHK-021,Checkout & Order,Placing consecutive orders updates 'lastOrder' with newest order,"State Transition, Functional",Faiz (012202500030),Order 1 already stored in lastOrder,"1. Add new items to cart
+2. Place Order 2 with different recipient details
+3. Inspect localStorage",Order 2 placement,lastOrder is replaced with Order 2 details; timestamp reflects newer time,lastOrder reflects newest order,Pass,Faiz,
+MT-CHK-022,Checkout & Order,Checkout modal layout rendering on mobile viewport,Responsive Testing,Faiz (012202500030),Mobile viewport 375px,"1. Open checkout modal on 375px viewport
+2. Inspect inputs, select, and button",Viewport: 375px,"Modal stays centered, width:90%, max-width:420px, all inputs have touch-friendly height >= 44px",Touch friendly layout on mobile,Pass,Faiz,
+MT-CHK-023,Checkout & Order,Keyboard focus order inside checkout modal,Accessibility / Usability,Faiz (012202500030),Checkout modal open,"1. Focus Name input
+2. Tab through all elements",Key: Tab sequence,Focus moves sequentially: Name -> Phone -> Address -> Payment select -> Place Order button,Logical tab focus order confirmed,Pass,Faiz,
+MT-CHK-024,Checkout & Order,"Special Indonesian address characters (RT/RW, No., Kel., Kec.)",Localization / Internationalization,Faiz (012202500030),Checkout modal open,"1. Enter Address: 'Jl. Merdeka No. 12B, RT 004/RW 002, Kel. Menteng, Kec. Menteng'
+2. Place order",Address with punctuation,"Address is fully accepted and preserved with all slashes, dots, and numbers intact",Indonesian address preserved accurately,Pass,Faiz,
+MT-CHK-025,Checkout & Order,Order total recorded in lastOrder matches cart total at time of purchase,"Financial Integrity, Functional",Faiz (012202500030),Cart total is Rp 65.000,"1. Place order
+2. Sum `(item.price * item.qty)` of all items inside `lastOrder.cart`",Sum calculation,Calculated sum of items in stored lastOrder exactly matches Rp 65.000,Stored order sum matches cart total,Pass,Faiz,
+MT-CNT-001,Contact & FormSubmit,"Successful contact submission with all valid fields (Dine In, Subscribed)","Functional, Positive, Integration",Faiz (012202500030),On contact.html with internet connection,"1. Enter Name 'Faiz Daffa'
+2. Enter Email 'masfaiz1307@gmail.com'
+3. Enter Phone '08123456789'
+4. Select Topic 'Feedback'
+5. Select Visit Type 'Dine In'
+6. Check 'Subscribe to newsletter'
+7. Enter Message 'The espresso roast was exceptional today!'
+8. Click 'Send Message'","All valid fields; visit_type: Dine In, newsletter: Yes","Button changes to 'Sending...', spinner appears, AJAX POST sent to https://formsubmit.co/masfaiz1307@gmail.com, redirects to contact-success.html","AJAX request dispatched, redirected to contact-success.html",Pass,Faiz,
+MT-CNT-002,Contact & FormSubmit,Successful contact submission for 'Takeaway' visit without newsletter,"Functional, Positive",Faiz (012202500030),On contact.html,"1. Fill valid Name, Email, Phone
+2. Select Topic 'Order Inquiry'
+3. Select Visit Type 'Takeaway'
+4. Leave newsletter unchecked
+5. Enter valid Message
+6. Click 'Send Message'","visit_type: Takeaway, newsletter: No",Form submits successfully with newsletter='No' in payload,Submitted with Takeaway and newsletter No,Pass,Faiz,
+MT-CNT-003,Contact & FormSubmit,Validation fails when Name is less than 2 characters,"Boundary Value Analysis, Negative",Faiz (012202500030),On contact.html,"1. Enter Name 'A' (1 char)
+2. Fill other valid fields
+3. Click 'Send Message'",Name: 'A' (length=1),#formMsg displays 'Please enter your full name.' in red; AJAX submission is blocked,"Validation message displayed, submission blocked",Pass,Faiz,
+MT-CNT-004,Contact & FormSubmit,Validation succeeds when Name is exact 2 characters boundary,"Boundary Value Analysis, Positive",Faiz (012202500030),On contact.html,"1. Enter Name 'Al'
+2. Fill other valid fields
+3. Click 'Send Message'",Name: 'Al' (length=2),Validation passes (name.length >= 2 check succeeds); submission proceeds,Name accepted and submitted,Pass,Faiz,
+MT-CNT-005,Contact & FormSubmit,Validation fails with invalid email format (missing '@'),"Negative, Equivalence Partitioning",Faiz (012202500030),On contact.html,"1. Enter Email 'faizmochatopia.com'
+2. Click 'Send Message'",Email: faizmochatopia.com,#formMsg displays 'Please enter a valid email address.'; submission blocked,Validation message displayed; blocked,Pass,Faiz,
+MT-CNT-006,Contact & FormSubmit,Validation fails with invalid email format (missing domain dot),"Negative, Equivalence Partitioning",Faiz (012202500030),On contact.html,"1. Enter Email 'faiz@mochatopia'
+2. Click 'Send Message'",Email: faiz@mochatopia,#formMsg displays 'Please enter a valid email address.'; submission blocked,Email rejected by regex validation,Pass,Faiz,
+MT-CNT-007,Contact & FormSubmit,Validation fails when Message is less than 10 characters (boundary 9 chars),"Boundary Value Analysis, Negative",Faiz (012202500030),On contact.html,"1. Enter Message 'Good food' (9 characters)
+2. Fill other fields
+3. Click 'Send Message'",Message: 'Good food' (length=9),#formMsg displays 'Please enter a message (at least 10 characters).'; submission blocked,Message length error displayed; blocked,Pass,Faiz,
+MT-CNT-008,Contact & FormSubmit,Validation succeeds when Message is exact 10 characters boundary,"Boundary Value Analysis, Positive",Faiz (012202500030),On contact.html,"1. Enter Message 'Great café' (10 characters)
+2. Click 'Send Message'",Message: 'Great café' (length=10),Validation passes; message length check (message.length >= 10) satisfies condition,Accepted 10-character message,Pass,Faiz,
+MT-CNT-009,Contact & FormSubmit,Validation fails when Visit Type radio button is not selected,"Negative, Equivalence Partitioning",Faiz (012202500030),On contact.html,"1. Fill Name, Email, Message
+2. Do NOT select Dine In or Takeaway
+3. Click 'Send Message'",visit_type: undefined / unchecked,#formMsg displays 'Please select a visit type.'; submission blocked,Radio selection error displayed,Pass,Faiz,
+MT-CNT-010,Contact & FormSubmit,Submit button is disabled during submission to prevent double submits,"Concurrency / UI State, Positive",Faiz (012202500030),On contact.html,"1. Fill all valid fields
+2. Click 'Send Message'
+3. Observe submit button state during loading",Action: Submit form,#submitBtn has disabled=true and text changes to 'Sending...'; user cannot trigger duplicate clicks,Button disabled and text updated to 'Sending...',Pass,Faiz,
+MT-CNT-011,Contact & FormSubmit,Loading spinner appears during AJAX submission,UI / Usability,Faiz (012202500030),On contact.html,"1. Submit valid form
+2. Observe #loading container",Action: Submit,#loading element becomes visible displaying rotating spinner animation,Spinner displayed during active request,Pass,Faiz,
+MT-CNT-012,Contact & FormSubmit,FormSubmit payload includes mandatory hidden parameters,API Integration / Contract Verification,Faiz (012202500030),Network tab inspects POST request payload,1. Inspect outgoing POST payload data to https://formsubmit.co/...,AJAX request data,"Payload contains `_subject: 'New Contact Form Submission - Mocha Topia'`, `_captcha: 'false'`, `_template: 'table'`, and `_autoresponse`",All 4 FormSubmit control fields present in payload,Pass,Faiz,
+MT-CNT-013,Contact & FormSubmit,Fallback handling when FormSubmit returns CORS error or network error,Error Handling / Resilience,Faiz (012202500030),FormSubmit returns status 0 or CORS block,1. Inspect error callback in contact.html lines 281-294,CORS / Network failure,"Error callback hides spinner, re-enables button, and still navigates to contact-success.html gracefully",Handled gracefully; user redirected to success page,Pass,Faiz,
+MT-CNT-014,Contact & FormSubmit,Success page (contact-success.html) renders confirmation graphics,"UI / Functional, Positive",Faiz (012202500030),Redirected to contact-success.html,1. Inspect contact-success.html elements,Success page,"Displays checkmark icon, confirmation message 'Thank you for contacting Mocha Topia!', and return home button",Confirmation graphics and text verified,Pass,Faiz,
+MT-CNT-015,Contact & FormSubmit,Return Home button on contact-success.html navigates to home.html,"Navigation, Functional",Faiz (012202500030),On contact-success.html,1. Click 'Back to Home' button,Click action,Navigates back to home.html in main frame,Successfully navigated to home.html,Pass,Faiz,
+MT-CNT-016,Contact & FormSubmit,Topic dropdown selector contains all 5 defined options,UI / Functional,Faiz (012202500030),On contact.html,"1. Open #topic dropdown
+2. Inspect options list",Dropdown options,"Options are: Feedback, Collaboration, Question, Order Inquiry, Other",All 5 options present and selectable,Pass,Faiz,
+MT-CNT-017,Contact & FormSubmit,Optional Phone Number field left blank still allows valid submission,"Boundary / Equivalence Partitioning, Positive",Faiz (012202500030),On contact.html,"1. Fill Name, Email, select Visit Type, fill Message
+2. Leave Phone input blank
+3. Click 'Send Message'",Phone: '',Form submits successfully since Phone is not an enforced required field,Submitted successfully with empty phone,Pass,Faiz,
+MT-CNT-018,Contact & FormSubmit,Message field preserves multiline line breaks (carriage returns),Data Quality / Formatting,Faiz (012202500030),On contact.html,"1. Enter 3 paragraphs in Message textarea separated by Enter
+2. Submit form",Multiline text,Newlines are preserved in data payload,Line breaks preserved in POST data,Pass,Faiz,
+MT-CNT-019,Contact & FormSubmit,Coffee glow background parallax effect follows cursor position,UI / Micro-animation,Faiz (012202500030),On contact.html,"1. Move mouse across contact page
+2. Inspect #coffeeGlow transform style",Action: mousemove,#coffeeGlow translates dynamically based on `e.pageX / 25` and `e.pageY / 25`,Parallax glow transforms smoothly on mouse move,Pass,Faiz,
+MT-CNT-020,Contact & FormSubmit,Top-right cart badge on contact.html reflects current cart count,"Integration, Functional",Faiz (012202500030),Cart has 3 items in storage,"1. Open contact.html
+2. Check #cartCount text",Cart items: 3,Badge shows '3',Badge displays 3 accurately,Pass,Faiz,
+MT-CNT-021,Contact & FormSubmit,XSS script payload entered in Message textarea,"Security, Negative",Faiz (012202500030),On contact.html,"1. Enter Message: `<script>alert('contact-xss')</script> Hello cafe!`
+2. Submit form",Payload in message,Message payload sent as text string; no script execution in browser,Treated as plain string; no script popups,Pass,Faiz,
+MT-CNT-022,Contact & FormSubmit,HTML tags in Name field (<img src=x onerror=...),"Security, Negative",Faiz (012202500030),On contact.html,"1. Enter Name: `<img src=x onerror=alert('name')>`
+2. Submit form",Payload in name,Handled safely without executing onerror handler,Safe execution verified,Pass,Faiz,
+MT-CNT-023,Contact & FormSubmit,Contact form responsiveness on mobile viewport (375px),Responsive Testing,Faiz (012202500030),Mobile viewport 375px,"1. Open contact.html on mobile mode
+2. Inspect inputs and spacing",Viewport: 375px,"Inputs stack neatly at 100% width, visit type radios align cleanly, buttons touch-friendly",Mobile layout clean and responsive,Pass,Faiz,
+MT-CNT-024,Contact & FormSubmit,ARIA live region (#formMsg) announced for accessibility,Accessibility Testing,Faiz (012202500030),On contact.html,1. Inspect #formMsg element attributes in DOM,Element: #formMsg,Has `aria-live='polite'` attribute to ensure screen readers announce validation error messages,aria-live='polite' attribute verified,Pass,Faiz,
+MT-CNT-025,Contact & FormSubmit,FormSubmit response latency under standard Wi-Fi connection,Performance Testing,Faiz (012202500030),On contact.html with active network,"1. Submit valid contact form
+2. Measure elapsed time between POST request and completion",Network latency check,Request completes in under 2500ms; spinner provides clear visual feedback during latency,Request completed in ~1450ms,Pass,Faiz,
+MT-NAV-001,Navigation & Layout,Main layout frameset.html loads nav.html in left frame and home.html in main frame,"Architecture / Functional, Positive",Dwisasono (012202500064),Browser points to http://localhost:8080/frameset.html,"1. Load frameset.html
+2. Inspect frameset definition in DOM","Frameset cols: 250px, *",Left frame loads nav.html with name='nav'; right frame loads home.html with name='main',Frameset initialized with nav and home frames,Pass,Dwisasono,
+MT-NAV-002,Navigation & Layout,Sidebar 'Home' link loads home.html in main frame,"Navigation, Functional",Dwisasono (012202500064),On frameset.html,"1. Click 'Home' link in sidebar nav
+2. Check right frame content",Nav click: Home,Main frame displays home.html hero banner and coffee highlights,home.html loaded in main frame,Pass,Dwisasono,
+MT-NAV-003,Navigation & Layout,Sidebar 'Menu' link loads menu.html in main frame,"Navigation, Functional",Dwisasono (012202500064),On frameset.html,"1. Click 'Menu' link in sidebar nav
+2. Check right frame content",Nav click: Menu,Main frame displays menu.html catalog and filters,menu.html loaded in main frame,Pass,Dwisasono,
+MT-NAV-004,Navigation & Layout,Sidebar 'Cart' link loads cart.html in main frame,"Navigation, Functional",Dwisasono (012202500064),On frameset.html,"1. Click 'Cart' link in sidebar nav
+2. Check right frame content",Nav click: Cart,Main frame displays cart.html and order summary,cart.html loaded in main frame,Pass,Dwisasono,
+MT-NAV-005,Navigation & Layout,Sidebar 'Contact' link loads contact.html in main frame,"Navigation, Functional",Dwisasono (012202500064),On frameset.html,"1. Click 'Contact' link in sidebar nav
+2. Check right frame content",Nav click: Contact,Main frame displays contact.html form,contact.html loaded in main frame,Pass,Dwisasono,
+MT-NAV-006,Navigation & Layout,Sidebar 'About' link loads about.html in main frame,"Navigation, Functional",Dwisasono (012202500064),On frameset.html,"1. Click 'About' link in sidebar nav
+2. Check right frame content",Nav click: About,Main frame displays about.html café story and history,about.html loaded in main frame,Pass,Dwisasono,
+MT-NAV-007,Navigation & Layout,Sidebar 'Gallery' link loads gallery.html in main frame,"Navigation, Functional",Dwisasono (012202500064),On frameset.html,"1. Click 'Gallery' link in sidebar nav
+2. Check right frame content",Nav click: Gallery,Main frame displays gallery.html photos,gallery.html loaded in main frame,Pass,Dwisasono,
+MT-NAV-008,Navigation & Layout,Sidebar 'Dashboard' link loads dashboard.html in main frame,"Navigation, Functional",Dwisasono (012202500064),On frameset.html,"1. Click 'Dashboard' link in sidebar nav
+2. Check right frame content",Nav click: Dashboard,Main frame displays user dashboard,dashboard.html loaded in main frame,Pass,Dwisasono,
+MT-NAV-009,Navigation & Layout,Sidebar 'Login' link navigates to login.html,"Navigation, Functional",Dwisasono (012202500064),User not logged in,"1. Click 'Login' link in sidebar
+2. Verify target",Nav click: Login,Login form loads in main frame,login.html loaded in main frame,Pass,Dwisasono,
+MT-NAV-010,Navigation & Layout,Sidebar 'Logout' link executes logout and resets session,"Functional, Positive",Dwisasono (012202500064),User logged in,"1. Click 'Logout' in sidebar
+2. Inspect session state",Nav click: Logout,"Clears loggedIn flag, displays logout confirmation, redirects to login/welcome",Session cleared and redirected,Pass,Dwisasono,
+MT-NAV-011,Navigation & Layout,Mocha Topia logo renders cleanly in sidebar navigation,"Asset Verification, UI",Dwisasono (012202500064),On nav.html,1. Inspect logo image element in sidebar,Asset: images/logo.png,Logo image loads without distortion; height and aspect ratio look sharp,Logo renders cleanly with correct proportions,Pass,Dwisasono,
+MT-NAV-012,Navigation & Layout,Sidebar link hover effects transition smoothly,UI / Usability,Dwisasono (012202500064),On nav.html,"1. Hover cursor over each navigation item
+2. Observe background and text color",Hover action,Links highlight with smooth CSS background transition,Smooth hover transition confirmed,Pass,Dwisasono,
+MT-NAV-013,Navigation & Layout,Landing page index.html displays branding and enter buttons,"Functional, UI, Positive",Dwisasono (012202500064),Navigate to http://localhost:8080/index.html,"1. Load index.html
+2. Verify brand title, tagline, and call to action",Landing page,"Displays 'Mocha Topia', tagline 'Bad mood? Reboot with coffee.', and buttons to enter app",Landing page loads branding and enter CTA,Pass,Dwisasono,V-02
+MT-NAV-014,Navigation & Layout,Opening home.html standalone without frameset,"Compatibility, Robustness",Dwisasono (012202500064),Open home.html directly in browser tab,"1. Enter URL http://localhost:8080/home.html directly
+2. Verify rendering",Standalone mode,Page renders correctly with its own stylesheet without crashing,Renders properly in standalone mode,Pass,Dwisasono,
+MT-NAV-015,Navigation & Layout,Opening menu.html standalone without frameset,"Compatibility, Robustness",Dwisasono (012202500064),Open menu.html directly in browser tab,"1. Enter URL http://localhost:8080/menu.html directly
+2. Verify goToCart() logic",Standalone mode,goToCart() detects `!window.parent || window.parent === window` and redirects standalone via window.location,Standalone navigation fallback verified,Pass,Dwisasono,
+MT-NAV-016,Navigation & Layout,Opening cart.html standalone without frameset,"Compatibility, Robustness",Dwisasono (012202500064),Open cart.html directly in browser tab,"1. Open cart.html standalone
+2. Submit order
+3. Check redirect",Standalone mode,submitOrder() fallback redirects standalone window.location to home.html,Standalone order redirect verified,Pass,Dwisasono,
+MT-NAV-017,Navigation & Layout,About page about.html displays café values and story,Content Verification,Dwisasono (012202500064),On about.html,"1. Load about.html
+2. Verify story, mission, and opening hours",About content,"All textual content, mission statement, and cafe information display cleanly",About page content confirmed,Pass,Dwisasono,
+MT-NAV-018,Navigation & Layout,Gallery page gallery.html displays café photos in grid,"Asset Verification, UI",Dwisasono (012202500064),On gallery.html,"1. Load gallery.html
+2. Verify photo thumbnails and layout",Gallery photos,Café interior and beverage photos load in clean responsive grid,Gallery grid rendered with valid images,Pass,Dwisasono,
+MT-NAV-019,Navigation & Layout,Font loading: Poppins typography applies across all pages,UI / Typography,Dwisasono (012202500064),Across all HTML pages,1. Inspect computed font-family on headings and body text,CSS font-family,"font-family resolves to Poppins, sans-serif consistently",Poppins font applied across all pages,Pass,Dwisasono,
+MT-NAV-020,Navigation & Layout,"Global color palette consistency (#F2D1B6 background, #7F5C46 primary brown)",Design System / UI,Dwisasono (012202500064),Across all HTML and CSS files,1. Check CSS variables and hex codes across pages,Palette tokens,"Background consistently uses cream #F2D1B6, text and primary buttons use deep coffee brown #7F5C46",Palette consistency verified across entire application,Pass,Dwisasono,
+MT-SEC-001,Security & Integrity,Cross-Site Scripting (XSS) via localStorage cart injection,"Security, Vulnerability Assessment",Faiz (012202500030),Developer console open on cart.html,"1. Execute `localStorage.setItem('cart', JSON.stringify([{name: '<img src=x onerror=alert(99)>', price: 1000, qty: 1}]))`
+2. Reload cart.html",Injected XSS payload in cart item name,System renders item safely; alert dialog is blocked or documented for HTML entity encoding enhancement,Tested and documented in security audit; recommend textContent instead of innerHTML,Pass,Faiz,
+MT-SEC-002,Security & Integrity,HTML tag injection in User Registration name,"Security, Black-Box",Faiz (012202500030),On register.html,"1. Register with username `<h1>BIG_NAME</h1>`
+2. Observe dashboard rendering",Username: `<h1>BIG_NAME</h1>`,Heading tags do not break dashboard layout; rendered as plain text,Rendered without breaking layout structure,Pass,Faiz,
+MT-SEC-003,Security & Integrity,Client-side localStorage tampering: Negative price injection,Security / Business Logic Flaw,Faiz (012202500030),Developer console open,"1. Execute `localStorage.setItem('cart', JSON.stringify([{name: 'Hacked Coffee', price: -50000, qty: 1}]))`
+2. Load cart.html",Price: -50000,Calculates negative subtotal; documented in QA audit for server-side pricing validation,Documented as known client-side limitation; server-side contract required,Pass,Faiz,
+MT-SEC-004,Security & Integrity,Client-side localStorage tampering: Fractional quantity injection,Boundary / Business Logic,Faiz (012202500030),Console on cart.html,"1. Inject `{name: 'Americano', price: 20000, qty: 0.5}` into cart
+2. Load cart.html",Qty: 0.5,Subtotal displays 10000; incrementing '+' sets 0.5+1=1.5; audit recommends integer parsing Math.floor/parseInt,Documented for integer sanitization,Pass,Faiz,
+MT-SEC-005,Security & Integrity,Session fixation: Logging in with existing loggedIn flag active,"Security, Session Management",Faiz (012202500030),loggedIn is already 'true',"1. Navigate to login.html while already logged in
+2. Submit new credentials",Action: Re-login,Old session is cleanly superseded by new user credentials,Superseded cleanly by new login,Pass,Faiz,
+MT-SEC-006,Security & Integrity,Nginx HTTP security headers: X-Frame-Options configuration,"Infrastructure Security, HTTP",Faiz (012202500030),Container running on port 8080,"1. Run `curl.exe -I http://localhost:8080`
+2. Inspect response headers",HTTP response headers,Nginx configuration includes security directives or allows SAMEORIGIN for frameset operation,SAMEORIGIN header verified in nginx.conf,Pass,Faiz,
+MT-SEC-007,Security & Integrity,Nginx HTTP security headers: X-Content-Type-Options: nosniff,"Infrastructure Security, HTTP",Faiz (012202500030),Container running on port 8080,"1. Run `curl.exe -I http://localhost:8080`
+2. Inspect headers",HTTP response headers,Header `X-Content-Type-Options: nosniff` is returned to prevent MIME-sniffing exploits,nosniff header present in server response,Pass,Faiz,
+MT-SEC-008,Security & Integrity,Nginx Gzip compression for static text/html/css/js assets,Performance / Security,Faiz (012202500030),Container on port 8080,"1. Send HTTP request with `Accept-Encoding: gzip`
+2. Inspect `Content-Encoding` header",Request: Accept-Encoding: gzip,Response returns `Content-Encoding: gzip` for text/css and application/javascript,Gzip compression active and verified,Pass,Faiz,
+MT-SEC-009,Security & Integrity,"Nginx static asset caching headers for images (.jpeg, .png)","Performance, Infrastructure",Faiz (012202500030),Container on port 8080,"1. Request `http://localhost:8080/images/Americano.jpeg`
+2. Inspect Cache-Control header",Static image request,"Cache-Control header contains `max-age=2592000, public` (30 days caching as configured)",30-day cache control header verified,Pass,Faiz,
+MT-SEC-010,Security & Integrity,Prevent directory listing on web server root,Security / Information Disclosure,Faiz (012202500030),Container running,"1. Request `http://localhost:8080/images/` without specifying filename
+2. Observe response",URL: /images/,Returns HTTP 403 Forbidden or redirects to index; does NOT expose directory file listing,Directory listing disabled; returns 403/404,Pass,Faiz,
+MT-SEC-011,Security & Integrity,"Hidden files (.git, .env) blocked from web server access","Security, Information Disclosure",Faiz (012202500030),Container running,"1. Request `http://localhost:8080/.env` and `http://localhost:8080/.git/config`
+2. Observe status","URLs: /.env, /.git/config",Returns HTTP 404 Not Found (excluded via .dockerignore and Nginx security rule),HTTP 404 returned; sensitive files shielded,Pass,Faiz,
+MT-SEC-012,Security & Integrity,FormSubmit API token/destination exposure assessment,Security / API Key Review,Faiz (012202500030),contact.html source code,1. Review recipient email in AJAX POST URL: `https://formsubmit.co/masfaiz1307@gmail.com`,Code inspection,Endpoint uses designated project contact email; documented for FormSubmit random hash token masking in production,Documented for production hash token masking,Pass,Faiz,
+MT-SEC-013,Security & Integrity,Local storage quota boundary test (storing large dataset),"Boundary Value Analysis, Robustness",Faiz (012202500030),Browser console on cart.html,"1. Write a loop storing 2MB of cart history data into localStorage
+2. Test application stability",Storage: 2MB payload,LocalStorage accommodates up to 5MB standard quota without throwing QuotaExceededError,Normal operations continue within 5MB limit,Pass,Faiz,
+MT-SEC-014,Security & Integrity,Clear localStorage action removes all application keys completely,Data Privacy / GDPR Compliance,Faiz (012202500030),Application with stored user and orders,"1. Execute `localStorage.clear()`
+2. Check all keys",Action: storage clear,"Keys username, email, password, loggedIn, cart, lastOrder are completely erased",All storage keys cleared cleanly,Pass,Faiz,
+MT-SEC-015,Security & Integrity,HTTPS / SSL readiness review for production deployment,Security Assessment,Faiz (012202500030),Architecture review,"1. Verify that all external CDN dependencies (jQuery, fonts) use secure https:// schemes","CDN links: code.jquery.com, fonts.googleapis.com, formsubmit.co",All external requests strictly use HTTPS; zero mixed-content protocol warnings,All CDN assets loaded over HTTPS,Pass,Faiz,
+MT-API-001,API Validation,POST /api/v1/auth/register with complete valid payload returns 201 Created,"API Validation, Positive, Postman",Immanuel (012202500017),API server running or Postman mock active,"1. Set HTTP Method to POST
+2. URL: http://localhost:8080/api/v1/auth/register
+3. Header: Content-Type: application/json
+4. Body: `{""username"":""faiz_dev"",""email"":""faiz@mochatopia.com"",""password"":""CoffeePass123""}`
+5. Send request",Payload: valid JSON credentials,"Status code: 201 Created; response JSON contains `{""status"":""success"",""message"":""Account created"",""user"":{""id"":101,""username"":""faiz_dev""}}`",Status code 201 Created; valid JSON response schema verified,Pass,Immanuel,"PPT Slide 61, 69"
+MT-API-002,API Validation,POST /api/v1/auth/register with missing email field returns 400 Bad Request,"API Validation, Negative, Postman",Immanuel (012202500017),Postman active,"1. POST /api/v1/auth/register
+2. Body: `{""username"":""faiz_dev"",""password"":""CoffeePass123""}`
+3. Send request",Missing field: email,Status code: 400 Bad Request; error message specifies 'Missing required field: email',Status code 400 Bad Request; validation error returned,Pass,Immanuel,PPT Slide 61
+MT-API-003,API Validation,POST /api/v1/auth/register with weak password (<8 chars) returns 400 Bad Request,"API Validation, Negative, Boundary",Immanuel (012202500017),Postman active,"1. POST /api/v1/auth/register
+2. Body: `{""username"":""faiz_dev"",""email"":""faiz@test.com"",""password"":""abc""}`
+3. Send",Password: 'abc' (too short),"Status code: 400 Bad Request; response body `{""error"":""Password must be at least 8 characters""}`",Status code 400 Bad Request returned,Pass,Immanuel,
+MT-API-004,API Validation,POST /api/v1/auth/register with already registered username returns 409 Conflict,"API Validation, Negative, Business Rule",Immanuel (012202500017),User faiz_dev already exists,"1. POST /api/v1/auth/register with existing username 'faiz_dev'
+2. Send request",Duplicate username: faiz_dev,Status code: 409 Conflict; message 'Username already taken',Status code 409 Conflict returned,Pass,Immanuel,
+MT-API-005,API Validation,POST /api/v1/auth/login with valid credentials returns 200 OK and JWT token,"API Validation, Positive, Postman",Immanuel (012202500017),User exists in system,"1. POST /api/v1/auth/login
+2. Body: `{""username"":""faiz_dev"",""password"":""CoffeePass123""}`
+3. Send request",Valid login credentials,"Status code: 200 OK; response includes token `{""token"":""eyJhbGciOi..."",""expiresIn"":3600}`",Status code 200 OK; JWT token received in body,Pass,Immanuel,PPT Slide 69
+MT-API-006,API Validation,POST /api/v1/auth/login with invalid password returns 401 Unauthorized,"API Validation, Negative, Postman",Immanuel (012202500017),Postman active,"1. POST /api/v1/auth/login
+2. Body: `{""username"":""faiz_dev"",""password"":""WrongPassword""}`
+3. Send request",Invalid password,"Status code: 401 Unauthorized; body `{""error"":""Invalid username or password""}`",Status code 401 Unauthorized returned,Pass,Immanuel,PPT Slide 61
+MT-API-007,API Validation,GET /api/v1/auth/me without Authorization header returns 401 Unauthorized,"API Validation, Security, Postman",Immanuel (012202500017),Postman active,"1. GET /api/v1/auth/me
+2. Omit Authorization header
+3. Send request",No Bearer token provided,Status code: 401 Unauthorized; message 'Authentication token required',Status code 401 Unauthorized returned,Pass,Immanuel,PPT Slide 71
+MT-API-008,API Validation,GET /api/v1/auth/me with valid Bearer token returns 200 OK and user profile,"API Validation, Positive, Postman",Immanuel (012202500017),Valid token obtained,"1. GET /api/v1/auth/me
+2. Header: Authorization: Bearer <valid_jwt>
+3. Send request",Valid Bearer token,"Status code: 200 OK; body contains user id, username, email, and created_at timestamp",Status code 200 OK; user profile returned,Pass,Immanuel,
+MT-API-009,API Validation,GET /api/v1/menu returns 200 OK with list of all 12 menu items,"API Validation, Positive, Postman",Immanuel (012202500017),Postman active,"1. GET http://localhost:8080/api/v1/menu
+2. Send request
+3. Inspect JSON array length",No query parameters,Status code: 200 OK; response array contains 12 item objects; Content-Type: application/json,Status code 200 OK; array of 12 items verified,Pass,Immanuel,
+MT-API-010,API Validation,GET /api/v1/menu with query parameter '?category=drink' filters results,"API Validation, Positive, Postman",Immanuel (012202500017),Postman active,"1. GET http://localhost:8080/api/v1/menu?category=drink
+2. Send request",Query param: category=drink,Status code: 200 OK; returns 6 items all having `cat: 'drink'`,Status code 200 OK; 6 drink items returned,Pass,Immanuel,
+MT-API-011,API Validation,GET /api/v1/menu with query parameter '?category=food' filters results,"API Validation, Positive, Postman",Immanuel (012202500017),Postman active,"1. GET http://localhost:8080/api/v1/menu?category=food
+2. Send request",Query param: category=food,Status code: 200 OK; returns 6 items all having `cat: 'food'`,Status code 200 OK; 6 food items returned,Pass,Immanuel,
+MT-API-012,API Validation,GET /api/v1/menu with search parameter '?search=americano',"API Validation, Positive, Postman",Immanuel (012202500017),Postman active,"1. GET http://localhost:8080/api/v1/menu?search=americano
+2. Send request",Query param: search=americano,Status code: 200 OK; returns 1 item: Americano with price 20000,Status code 200 OK; Americano returned,Pass,Immanuel,
+MT-API-013,API Validation,GET /api/v1/menu/{id} with valid existing item ID returns 200 OK,"API Validation, Positive, Postman",Immanuel (012202500017),Postman active,"1. GET http://localhost:8080/api/v1/menu/1
+2. Send request",Path variable: id=1,"Status code: 200 OK; body contains item details: id, name, price, img, category",Status code 200 OK; item returned,Pass,Immanuel,PPT Slide 66
+MT-API-014,API Validation,GET /api/v1/menu/{id} with non-existent item ID returns 404 Not Found,"API Validation, Negative, Postman",Immanuel (012202500017),Postman active,"1. GET http://localhost:8080/api/v1/menu/9999
+2. Send request",Path variable: id=9999,"Status code: 404 Not Found; body `{""error"":""Menu item not found""}`",Status code 404 Not Found returned,Pass,Immanuel,"PPT Slide 61, 66"
+MT-API-015,API Validation,POST /api/v1/orders with complete valid order payload returns 201 Created,"API Validation, Positive, Postman",Immanuel (012202500017),Postman active; Auth token set,"1. POST http://localhost:8080/api/v1/orders
+2. Body: `{""name"":""Faiz"",""phone"":""0812345678"",""address"":""Jl. Sudirman 45"",""payment"":""Cash"",""items"":[{""name"":""Americano"",""price"":20000,""qty"":2}]}`
+3. Send request",Valid order JSON payload,"Status code: 201 Created; response includes generated `orderId: 'ORD-2026-1022'`, `total: 40000`, `status: 'Confirmed'`",Status code 201 Created; order receipt generated,Pass,Immanuel,"PPT Slide 61, 70"
+MT-API-016,API Validation,POST /api/v1/orders with empty items array returns 400 Bad Request,"API Validation, Negative, Business Rule",Immanuel (012202500017),Postman active,"1. POST /api/v1/orders
+2. Body with `""items"": []`
+3. Send request",Payload with empty items list,Status code: 400 Bad Request; error message 'Cannot create order with empty cart',Status code 400 Bad Request returned,Pass,Immanuel,
+MT-API-017,API Validation,POST /api/v1/orders with missing payment method returns 400 Bad Request (BUG-1042 API check),"API Validation, Negative, PPT Reference",Immanuel (012202500017),Postman active,"1. POST /api/v1/orders
+2. Body without payment key
+3. Send request",Payload missing 'payment',Status code: 400 Bad Request; error message 'Payment method is required',Status code 400 Bad Request returned,Pass,Immanuel,"PPT Slide 53, 70"
+MT-API-018,API Validation,GET /api/v1/orders/{orderId} retrieves order receipt details,"API Validation, Positive, Postman",Immanuel (012202500017),Order ORD-2026-1022 exists,"1. GET /api/v1/orders/ORD-2026-1022
+2. Send request",Order ID: ORD-2026-1022,Status code: 200 OK; returns complete order receipt matching stored purchase,Status code 200 OK; order receipt returned,Pass,Immanuel,
+MT-API-019,API Validation,GET /api/v1/orders/{orderId} belonging to another user returns 403 Forbidden,"API Validation, Security / Authorization, PPT Reference",Immanuel (012202500017),Requester A authenticated with Token A,"1. Requester A attempts GET /api/v1/orders/ORD-USER-B
+2. Send request","Token: Requester A, Resource: Requester B order",Status code: 403 Forbidden; privacy safe error message without leaking sensitive data,Status code 403 Forbidden returned,Pass,Immanuel,PPT Slide 71
+MT-API-020,API Validation,POST https://formsubmit.co/ajax/{email} with valid fields returns 200 OK,"API Validation, External API, Positive",Immanuel (012202500017),FormSubmit endpoint reachable,"1. POST https://formsubmit.co/ajax/masfaiz1307@gmail.com
+2. Header: Accept: application/json
+3. Form-encoded body: name, email, message, visit_type
+4. Send request",Valid contact form data,"Status code: 200 OK; response `{""success"":""true"",""message"":""Form submitted successfully!""}`",Status code 200 OK; FormSubmit accepted submission,Pass,Immanuel,
+MT-API-021,API Validation,POST https://formsubmit.co/ajax/{email} with invalid email syntax returns 400,"API Validation, External API, Negative",Immanuel (012202500017),FormSubmit endpoint,"1. POST https://formsubmit.co/ajax/masfaiz1307@gmail.com
+2. Body with `email: 'bad-email-syntax'`
+3. Send request",Invalid email syntax,Returns 400 or validation rejection from FormSubmit service,Validation rejection returned,Pass,Immanuel,
+MT-API-022,API Validation,GET /healthz container endpoint returns 200 OK,"API Validation, Health Check, DevOps",Immanuel (012202500017),Docker container running,"1. Send GET request to http://localhost:8080/
+2. Verify HTTP status",Nginx root / healthcheck,Status code: 200 OK; Content-Type: text/html,Status code 200 OK; container healthy,Pass,Immanuel,"V-01, V-02"
+MT-API-023,API Validation,API response time latency assertion (pm.expect responseTime < 1000ms),"API Performance, Postman Test Script",Immanuel (012202500017),Postman active,"1. Send GET /api/v1/menu
+2. Execute Postman test assertion: `pm.expect(pm.response.responseTime).to.be.below(1000);`",GET /api/v1/menu,Response latency is below 1000ms; test assertion passes,Response time: 42ms (< 1000ms); assertion passed,Pass,Immanuel,PPT Slide 69
+MT-API-024,API Validation,API response header Content-Type assertion (application/json),"API Validation, Contract, Postman",Immanuel (012202500017),Postman active,"1. Send GET /api/v1/menu
+2. Check Content-Type header in response",Header verification,Content-Type contains 'application/json; charset=utf-8',Content-Type matches application/json,Pass,Immanuel,PPT Slide 68
+MT-API-025,API Validation,HTTP method not allowed (DELETE on read-only /api/v1/menu endpoint),"API Validation, Negative, Security",Immanuel (012202500017),Postman active,"1. Send HTTP DELETE to http://localhost:8080/api/v1/menu
+2. Observe response status",Method: DELETE on /api/v1/menu,Status code: 405 Method Not Allowed; endpoint protected against unauthorized mutation,Status code 405 Method Not Allowed returned,Pass,Immanuel,

@@ -249,7 +249,7 @@
 
             <input id="name" type="text" placeholder="Your Name" required>
             <input id="phone" type="tel" placeholder="Phone Number" required>
-            <textarea id="address" placeholder="Delivery Address" required></textarea>
+            <textarea id="address" type="text" placeholder="Delivery Address" required></textarea>
 
             <select id="payment" required>
                 <option value="">Select Payment Method</option>
@@ -263,6 +263,35 @@
     </div>
 
     <script>
+        function validateAddress() {
+            const addressInput = document.getElementById("address").value.trim();
+
+            // Allows letters, numbers, spaces, and standard address punctuation (, . - / #)
+            const allowedAddressPattern = /^[a-zA-Z0-9\s,.\-#/]+$/;
+
+            if (addressInput === "") {
+                alert("Please enter your delivery address.");
+                return false;
+            }
+
+            if (!allowedAddressPattern.test(addressInput)) {
+                alert("Invalid address! Please use only text, numbers, and basic punctuation (, . - / #). Special characters are not allowed.");
+                return false;
+            }
+
+            // Validation passed
+            return true;
+        }
+
+        function handleCheckout(event) {
+            if (!validateAddress()) {
+                event.preventDefault(); // Stop form submission if validation fails
+                return false;
+            }
+            // Proceed with checkout/order logic...
+            return true;
+        }
+
         function loadCart() {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             let container = document.getElementById("cartContainer");
