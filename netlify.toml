@@ -1,0 +1,32 @@
+# ============================================================
+# Netlify Configuration for Mocha Topia
+# Static Web Application with Edge CDN Caching & Security Headers
+# ============================================================
+
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/api-docs"
+  to = "/API_DOCUMENTATION.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+

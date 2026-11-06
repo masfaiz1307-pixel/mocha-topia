@@ -1,0 +1,143 @@
+name: Mocha Topia CI/CD Pipeline (Optimized)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ==========================================================
+  # JOB 1: Secrets & Sensitive Data Audit (Gitleaks / Custom Scanner)
+  # ==========================================================
+  security-secrets-audit:
+    name: 🛡️ Audit Hardcoded Secrets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Automated Secrets & Security Audit
+        run: |
+          python scratch/run_security_audit.py
+
+      - name: Upload Security Audit Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-report
+          path: |
+            SECURITY_AUDIT_REPORT.json
+            SECURITY_AUDIT_REPORT.md
+
+  # ==========================================================
+  # JOB 2: Dependency Vulnerabilities & Base Image Audit
+  # ==========================================================
+  dependency-vulnerability-audit:
+    name: 📦 Audit Dependencies & CVEs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy Vulnerability Scanner (Filesystem & Config)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
+
+  # ==========================================================
+  # JOB 3: API Contract & Postman Validation
+  # ==========================================================
+  qa-api-validation:
+    name: 🧪 Validate OpenAPI & Postman Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Validation Tools
+        run: |
+          pip install PyYAML openpyxl requests
+
+      - name: Validate OpenAPI Schema Syntax
+        run: |
+          python -c "
+          import yaml, json
+          with open('openapi.yaml', 'r', encoding='utf-8') as f:
+              data = yaml.safe_load(f)
+          print(f'✅ OpenAPI spec is valid: {data[\"info\"][\"title\"]} ({len(data[\"paths\"])} paths)')
+          with open('MochaTopia_API_Postman_Collection.json', 'r', encoding='utf-8') as f:
+              postman = json.load(f)
+          print(f'✅ Postman collection is valid: {postman[\"info\"][\"name\"]}')
+          "
+
+  # ==========================================================
+  # JOB 4: Fast-Path Cloud Deployment (Vercel Global Edge)
+  # ==========================================================
+  deploy-edge-vercel:
+    name: 🚀 Deploy to Vercel Global Edge
+    needs: [security-secrets-audit, dependency-vulnerability-audit, qa-api-validation]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Deployment Configuration
+        run: |
+          node -e "
+          const v = JSON.parse(require('fs').readFileSync('vercel.json'));
+          console.log('✅ Vercel config valid. App name:', v.name, 'Clean URLs:', v.cleanUrls);
+          "
+
+      - name: Deploy to Vercel (CLI)
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+        continue-on-error: true
+
+  # ==========================================================
+  # JOB 5: Optimized Docker Container Build with Layer Cache
+  # ==========================================================
+  docker-build-cached:
+    name: 🐳 Docker Build with Buildx Cache
+    needs: [security-secrets-audit, qa-api-validation]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Cache Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: mocha-topia/website:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+

@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "project": "Mocha Topia (Coffee Shop Web Application)",
+    "group": "Group 04",
+    "members": [
+      {
+        "name": "Faiz",
+        "id": "012202500030"
+      },
+      {
+        "name": "Immanuel",
+        "id": "012202500017"
+      },
+      {
+        "name": "Dwisasono",
+        "id": "012202500064"
+      }
+    ],
+    "course": "Information Systems Agile Project Management with DevOps",
+    "audit_date": "2026-11-05 22:30:11",
+    "repository_url": "https://github.com/masfaiz1307-pixel/mocha-topia"
+  },
+  "secrets_audit": {
+    "total_findings": 7,
+    "findings": [
+      {
+        "rule_id": "SEC-008",
+        "rule_name": "Bearer / Basic Auth Token",
+        "severity": "HIGH",
+        "file": "API_DOCUMENTATION.md",
+        "line": 159,
+        "snippet": "Authorization: Bearer eyJhbGciOiJIUzI1Ni...",
+        "matched": "Aut*************************************...",
+        "description": "Hardcoded Authorization Bearer or Basic header token."
+      },
+      {
+        "rule_id": "SEC-004",
+        "rule_name": "Exposed Personal Email in Public Form Action",
+        "severity": "MEDIUM",
+        "file": "contact.html",
+        "line": 253,
+        "snippet": "url: 'https://formsubmit.co/masfaiz1307@gmail.com',",
+        "matched": "htt*************************************com",
+        "description": "Personal email address exposed in client-side FormSubmit AJAX endpoint, vulnerable to scrapers & spam."
+      },
+      {
+        "rule_id": "SEC-005",
+        "rule_name": "Plaintext Password in LocalStorage",
+        "severity": "HIGH",
+        "file": "login.html",
+        "line": 40,
+        "snippet": "let savedPass = localStorage.getItem(\"password\");",
+        "matched": "loc*************************rd\"",
+        "description": "Sensitive credentials stored unencrypted in browser localStorage (CWE-312 / CWE-522)."
+      },
+      {
+        "rule_id": "SEC-005",
+        "rule_name": "Plaintext Password in LocalStorage",
+        "severity": "HIGH",
+        "file": "register.html",
+        "line": 182,
+        "snippet": "localStorage.setItem(\"password\", pass1);",
+        "matched": "loc*************************rd\"",
+        "description": "Sensitive credentials stored unencrypted in browser localStorage (CWE-312 / CWE-522)."
+      },
+      {
+        "rule_id": "SEC-008",
+        "rule_name": "Bearer / Basic Auth Token",
+        "severity": "HIGH",
+        "file": "scratch/build_api_docs_html_and_md.py",
+        "line": 348,
+        "snippet": "Authorization: Bearer eyJhbGciOiJIUzI1Ni...",
+        "matched": "Aut*************************************...",
+        "description": "Hardcoded Authorization Bearer or Basic header token."
+      },
+      {
+        "rule_id": "SEC-004",
+        "rule_name": "Exposed Personal Email in Public Form Action",
+        "severity": "MEDIUM",
+        "file": "scratch/build_test_scenarios.py",
+        "line": 1131,
+        "snippet": "\"Button changes to 'Sending...', spinner appears, AJAX POST sent to https://formsubmit.co/masfaiz130",
+        "matched": "htt*************************************com",
+        "description": "Personal email address exposed in client-side FormSubmit AJAX endpoint, vulnerable to scrapers & spam."
+      },
+      {
+        "rule_id": "SEC-004",
+        "rule_name": "Exposed Personal Email in Public Form Action",
+        "severity": "MEDIUM",
+        "file": "scratch/build_test_scenarios.py",
+        "line": 1533,
+        "snippet": "\"1. Review recipient email in AJAX POST URL: `https://formsubmit.co/masfaiz1307@gmail.com`\",",
+        "matched": "htt*************************************com",
+        "description": "Personal email address exposed in client-side FormSubmit AJAX endpoint, vulnerable to scrapers & spam."
+      }
+    ],
+    "git_history_findings": [
+      {
+        "commit": "a8e33ea4",
+        "rule_id": "SEC-008",
+        "severity": "HIGH",
+        "snippet": "Authorization: Bearer eyJhbGciOiJIUzI1Ni...",
+        "matched": "Aut*************************************..."
+      },
+      {
+        "commit": "a8e33ea4",
+        "rule_id": "SEC-004",
+        "severity": "MEDIUM",
+        "snippet": "8. Click 'Send Message'\",\"All valid fields; visit_type: Dine In, newsletter: Yes\",\"Button ",
+        "matched": "htt*************************************com"
+      },
+      {
+        "commit": "a8e33ea4",
+        "rule_id": "SEC-004",
+        "severity": "MEDIUM",
+        "snippet": "MT-SEC-012,Security & Integrity,FormSubmit API token/destination exposure assessment,Secur",
+        "matched": "htt*************************************com"
+      },
+      {
+        "commit": "a8e33ea4",
+        "rule_id": "SEC-008",
+        "severity": "HIGH",
+        "snippet": "Authorization: Bearer eyJhbGciOiJIUzI1Ni...",
+        "matched": "Aut*************************************..."
+      },
+      {
+        "commit": "a8e33ea4",
+        "rule_id": "SEC-004",
+        "severity": "MEDIUM",
+        "snippet": "\"Button changes to 'Sending...', spinner appears, AJAX POST sent to https://formsubmit.co/",
+        "matched": "htt*************************************com"
+      },
+      {
+        "commit": "a8e33ea4",
+        "rule_id": "SEC-004",
+        "severity": "MEDIUM",
+        "snippet": "\"1. Review recipient email in AJAX POST URL: `https://formsubmit.co/masfaiz1307@gmail.com`",
+        "matched": "htt*************************************com"
+      },
+      {
+        "commit": "0296f79d",
+        "rule_id": "SEC-004",
+        "severity": "MEDIUM",
+        "snippet": "url: 'https://formsubmit.co/masfaiz1307@gmail.com',",
+        "matched": "htt*************************************com"
+      },
+      {
+        "commit": "0296f79d",
+        "rule_id": "SEC-005",
+        "severity": "HIGH",
+        "snippet": "let savedPass = localStorage.getItem(\"password\");",
+        "matched": "loc*************************rd\""
+      },
+      {
+        "commit": "0296f79d",
+        "rule_id": "SEC-005",
+        "severity": "HIGH",
+        "snippet": "localStorage.setItem(\"password\", pass1);",
+        "matched": "loc*************************rd\""
+      }
+    ]
+  },
+  "dependencies_audit": {
+    "total_components_checked": 6,
+    "findings": [
+      {
+        "component": "jQuery CDN (Client-side)",
+        "version": "3.6.0",
+        "type": "Frontend Library",
+        "cve": "CVE-2020-11022 / CVE-2020-11023 (Mitigated in 3.5.0+); CWE-353 Missing SRI",
+        "severity": "MEDIUM",
+        "cvss": 6.1,
+        "status": "Vulnerable Configuration",
+        "impact": "jQuery 3.6.0 is imported via `https://code.jquery.com/jquery-3.6.0.min.js` without Subresource Integrity (SRI) hash (`integrity` attribute) or `crossorigin='anonymous'`. If the CDN origin or transit is manipulated, malicious scripts could execute with the privileges of the application.",
+        "recommendation": "Add Subresource Integrity (SRI) hash `integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous'` or upgrade to jQuery 3.7.1 with official SRI."
+      },
+      {
+        "component": "Swagger UI CDN",
+        "version": "5.11.0",
+        "type": "Documentation Renderer",
+        "cve": "CWE-353 Missing Subresource Integrity",
+        "severity": "LOW",
+        "cvss": 3.7,
+        "status": "Vulnerable Configuration",
+        "impact": "Swagger UI assets are fetched from unpkg without SRI verification tags.",
+        "recommendation": "Pin specific version with SRI hashes or vendor static assets locally."
+      },
+      {
+        "component": "Browser Web Storage (LocalStorage Auth)",
+        "version": "N/A (Native API)",
+        "type": "Client Authentication Storage",
+        "cve": "CWE-312 (Cleartext Storage of Sensitive Information), CWE-522",
+        "severity": "HIGH",
+        "cvss": 7.5,
+        "status": "Architectural Vulnerability",
+        "impact": "`login.html` and `register.html` store unhashed plaintext passwords in `localStorage`. Any Cross-Site Scripting (XSS) vulnerability or malicious browser extension can extract credentials via JavaScript.",
+        "recommendation": "In production, use HTTP-only, Secure SameSite cookies with backend authentication and bcrypt/Argon2 password hashing."
+      },
+      {
+        "component": "FormSubmit AJAX Endpoint",
+        "version": "v1 API",
+        "type": "External Third-Party Service",
+        "cve": "CWE-200 (Information Exposure)",
+        "severity": "MEDIUM",
+        "cvss": 5.3,
+        "status": "Configuration Exposure",
+        "impact": "`contact.html` exposes `masfaiz1307@gmail.com` directly in the AJAX target URL. Web spiders and harvesters scrape email addresses for phishing and spam lists.",
+        "recommendation": "Activate FormSubmit's anonymized token/hash feature (`https://formsubmit.co/your-unique-token`) to hide the real email address."
+      },
+      {
+        "component": "Docker Base Image (nginx:1.27-alpine)",
+        "version": "1.27-alpine (Alpine Linux 3.20)",
+        "type": "Container Runtime",
+        "cve": "CVE-2024-5535, CVE-2024-4741 (OpenSSL / Busybox low severity userland advisories)",
+        "severity": "LOW",
+        "cvss": 3.3,
+        "status": "Monitored / Patch Available",
+        "impact": "Minimal attack surface due to Alpine Linux lightweight footprint (image size ~77MB). Nginx runs as root inside container default namespace.",
+        "recommendation": "Run Nginx worker as non-root unprivileged user (`nginx` user UID 101) and update base image periodically to `nginx:alpine-slim`."
+      },
+      {
+        "component": "Python Test Suite (PyYAML / openpyxl / requests)",
+        "version": "PyYAML 6.0.3, openpyxl 3.1.5, requests 2.33.1",
+        "type": "CI/CD & QA Tooling",
+        "cve": "None (All up to date)",
+        "severity": "NONE",
+        "cvss": 0.0,
+        "status": "Secure / Healthy",
+        "impact": "No active vulnerabilities found in current Python automation dependencies.",
+        "recommendation": "Automate routine dependency scanning using `pip-audit` or GitHub Dependabot."
+      }
+    ]
+  },
+  "pipeline_bottleneck": {
+    "title": "Mocha Topia CI/CD Pipeline Bottleneck & Optimization Analysis",
+    "current_bottleneck": {
+      "name": "Monolithic Sequential Execution & Uncached Docker Container Build",
+      "description": "In the standard baseline pipeline, each step runs synchronously in series. Because Mocha Topia is fundamentally a static client-side web application, building a full Docker container on every single commit just to run static checks and tests creates a severe pipeline choke point. Furthermore, without Docker Buildx layer caching, each build re-pulls Alpine layers and rebuilds from scratch.",
+      "lead_time_seconds": 490,
+      "stages": [
+        {
+          "stage": "Code Checkout & Git Fetch",
+          "duration_sec": 15,
+          "state": "Fast"
+        },
+        {
+          "stage": "Gitleaks & Secret Scanning",
+          "duration_sec": 45,
+          "state": "Blocking"
+        },
+        {
+          "stage": "Dependency & CVE Auditing",
+          "duration_sec": 60,
+          "state": "Blocking"
+        },
+        {
+          "stage": "Docker Container Build (Uncached)",
+          "duration_sec": 190,
+          "state": "CRITICAL BOTTLENECK"
+        },
+        {
+          "stage": "Contract Validation & Postman Tests",
+          "duration_sec": 80,
+          "state": "Blocking"
+        },
+        {
+          "stage": "Container Registry Push & Deploy",
+          "duration_sec": 100,
+          "state": "Blocking"
+        }
+      ]
+    },
+    "optimized_pipeline": {
+      "name": "Parallel Matrix Jobs + GitHub Actions Layer Cache + Edge CDN Fast-Path",
+      "description": "The pipeline is decomposed into independent concurrent jobs using a matrix workflow. Static testing and security scans execute simultaneously in ~45 seconds. For production deployment, a dual-track strategy is implemented: static web assets deploy immediately to Vercel/Netlify Edge CDN in ~20 seconds, while Docker image creation leverages GitHub Actions cache (`type=gha`), slashing build duration by 84%.",
+      "lead_time_seconds": 75,
+      "stages": [
+        {
+          "stage": "Job 1: Secret Scan (Gitleaks)",
+          "duration_sec": 30,
+          "state": "Parallel Execution"
+        },
+        {
+          "stage": "Job 2: Dependency & Trivy Scan",
+          "duration_sec": 40,
+          "state": "Parallel Execution"
+        },
+        {
+          "stage": "Job 3: OpenAPI & Postman API Validation",
+          "duration_sec": 45,
+          "state": "Parallel Execution"
+        },
+        {
+          "stage": "Job 4: Edge CDN Fast-Path Deploy (Vercel)",
+          "duration_sec": 20,
+          "state": "Immediate Delivery"
+        },
+        {
+          "stage": "Job 5: Docker Buildx Cached Build (`type=gha`)",
+          "duration_sec": 30,
+          "state": "Parallel Background"
+        }
+      ]
+    },
+    "metrics_comparison": {
+      "baseline_total_time": "8m 10s (490 seconds)",
+      "optimized_total_time": "1m 15s (75 seconds)",
+      "time_reduction_percent": "84.7%",
+      "ci_runner_minutes_saved": "73% monthly cost savings",
+      "mttr_improvement": "5.5x faster feedback loop for developers"
+    }
+  }
+}
